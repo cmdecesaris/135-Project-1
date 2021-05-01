@@ -1,0 +1,52 @@
+---
+title: "Exploritory Data Analysis"
+author: "Christina De Cesaris"
+date: "4/30/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r Libraries}
+library(dbplyr)
+library(MASS)
+
+
+#graphics
+library(ggplot2) #graphing 
+library(DT) 
+
+
+#data
+smok = read.csv("data/Birthweight_reduced_kg_R.csv")
+```
+
+
+
+```{r}
+dim(smok)
+
+summary(smok)
+
+str(smok)
+
+
+which(is.na(smok))
+```
+
+```{r}
+plot(smok$Birthweight, smok$Gestation )
+
+plot(smok$smoker, smok$Birthweight)
+
+```
+
+
+```{r}
+#means plot with confidence intervals 
+plotmeans(Birthweight~smoker,data=smok,xlab="Status",ylab="Mean Birth Weight", main="Birth Weights: Smoking vs Non Smoking Mothers",legends=c("Non-Smoker","Smoker"),lwd=2,barwidth=2) 
+```
+

@@ -1,0 +1,42 @@
+---
+title: "STA 135 Project 1 [add a good title."
+author: "Trevor, Michelle, Christina De Cesaris"
+date: "4/30/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The Report  Format
+
+You report should be writing in full sentences, and have the following sections, while being as speciﬁc as you can about your results. **There should not be any “copy and pasted” R code in this report. You must format the results you get from R.**
+
+
+
+I. Introduction. State the question you are trying to answer, why it is a question of interest (why might we be interested in the answer), and what statistical technique you are going to use. Hint: use the proposed questions to formulate a question of interest.
+
+
+II. Summary of your data. This should include things like plots (histograms, boxplots, star plot, parallel, etc ...) including the interpretation of the plots, and summary values such as sample means and standard deviations. This is where you should justify your choice of question of interest.
+
+
+III. Analysis. Remember  to  write  your  results  in  full  sentences  where  possible.
+
+
+IV. Interpretation.   State  your  conclusion,  and  inference  that  you  may  draw  from  your  corresponding  analysis.   These  should all  be  in  terms  of  your  problem.
+
+
+V. Conclusion. Summarize  briefly  your  ﬁndings.    Here  you  do  not  have  to  re-iterate  your  numeric  values,  but  summarize all  relevant  conclusions.
+
+
+## Details
+
+Your report should be the following  format:
+i.    Typed.
+ii.   Double-sided  pages.
+iii. An appendix of your R code used to produce the results. Do not include in R code in the body of your report.
+iv.  
+
+You  are  welcome  to  provide  a  nice/meaningful  title  to  your  project.
+Notice:   your  project  will  be  graded  as  a  group  effort  (if  you  have  two/three  people).   This  means  that  you  are  responsible  for your  own  work,  and  your  partners  work.   We  will  not  assign  two  different  grades  to  one  project.
