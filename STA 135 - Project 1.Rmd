@@ -21,7 +21,7 @@ May 4, 2021
 
 ```{r}
 smok = read.csv("data/Birthweight_reduced_kg_R.csv")
-subset(birth.data, smoker == 1, select = c("Length", "Birthweight"))
+#subset(smok, smoker == 1, select = c("Length", "Birthweight"))
 ```
 
 # I. Introduction
