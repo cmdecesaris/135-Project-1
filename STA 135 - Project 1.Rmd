@@ -21,7 +21,6 @@ May 4, 2021
 
 ```{r}
 smok = read.csv("data/Birthweight_reduced_kg_R.csv")
-#subset(smok, smoker == 1, select = c("Length", "Birthweight"))
 ```
 
 # I. Introduction
@@ -33,6 +32,7 @@ Although low birth weighted infants can be healthy, under improper care or other
 
 
 # II. Summary of Data
+Before conducting PCA onto a dataset, we must first examine the data and decide on what variables we want to specifically look at by looking at different plots and summaries.  \
 
 ```{r}
 #Plots
@@ -41,7 +41,9 @@ Although low birth weighted infants can be healthy, under improper care or other
 
 
 ```
-
+The plot above shows.... \
+\
+When conducting the analysis, we also want to know if we want to use the covariance matrix or the correlation matrix. [Discuss the positive and negative aspects of using the covariance matrix for a PCA rather than the correlation matrix.]
 
 
 
@@ -50,14 +52,44 @@ Although low birth weighted infants can be healthy, under improper care or other
 # III. Analysis
 
 
+1. 
+[If the overall goal is to compare babies according with their mother’s smoking status, how would you proceed ?
+
+My suggestion:  Run PCs on these two groups (use the smoking status to split the data and run PCs on them).Then comment on their similarities and differences.  You can compare their PCs, scree plots, etc ...] \
+```{r}
+nonsmoke = subset(smok, smoker == 0)
+smoke = subset(smok, smoker == 1)
+#use: select = c("Length", "Birthweight", "other variables") in subset fcn for specific columns 
+```
+\
+\
+***Using the dataset for answering our question of interest. 
+
+2.
+[Determine the number of PCs needed when using the correlation matrix.]
 
 
+
+
+
+3. 
+[Interpret  the  PCs  chosen  from  the  previous  part. Make sure to specifically  comment  on  whether  positive  or negative scores (or scores close to 0) for a PC would likely be beneficial for baby.
+
+Hint: To help see which of the loadings are “away from zero”, one could set the cutoff argument value in summary()to something other than 0.0.  For example one can use a cutoff of 0.2. ]
+
+
+
+
+4.
+[Examine plots of the PC scores and interpret them in the context of the problem. For example, what do you think of a particular patient (Baby).]
 
 
 
 
 # IV. Interpretation
+Rehash and summarize analysis section here.
 
+[Suppose a new baby is born after the PCA has been completed. The newly born has the characteristics as indicated in Table 1.  Through using the previous PCA results, discuss how this particular individual/baby would compare to the other babies.]
 
 
 
@@ -65,8 +97,7 @@ Although low birth weighted infants can be healthy, under improper care or other
 
 
 # V. Conclusion
-
-
+[What is your general conclusion and possible future work. By future work, I mean if you have more time what possible questions would you want to investigate ?]
 
 
 
