@@ -1,0 +1,82 @@
+---
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+\begin{center}
+\vspace*{10\baselineskip}
+\LARGE{\textbf{Project 1: PCA Analysis on a Birthweight Dataset}}\\
+\vspace*{19\baselineskip}
+\normalsize{Trevor Carpenter, Christina De Cesaris, Michelle Tran}\\
+STA 135: Multivariate Data Analysis\\
+Professor Maxime Pouokam\\
+University of California, Davis\\
+May 4, 2021
+\end{center}
+
+\clearpage
+
+```{r}
+smok = read.csv("data/Birthweight_reduced_kg_R.csv")
+#subset(smok, smoker == 1, select = c("Length", "Birthweight"))
+```
+
+# I. Introduction
+
+
+
+
+
+# II. Summary of Data
+
+```{r}
+#Plots
+
+
+
+
+```
+
+
+
+
+
+
+# III. Analysis
+
+
+
+
+
+
+
+
+# IV. Interpretation
+
+
+
+
+
+
+
+# V. Conclusion
+
+
+
+
+
+
+
+
+
+
+\clearpage
+
+\subsection*{Appendix: R Script}
+
+```{r, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+
+```
