@@ -1,0 +1,84 @@
+---
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+\begin{center}
+\vspace*{10\baselineskip}
+\LARGE{\textbf{Project 1: PCA Analysis on a Birth Weight Dataset}}\\
+\vspace*{19\baselineskip}
+\normalsize{Trevor Carpenter, Christina De Cesaris, Michelle Tran}\\
+STA 135: Multivariate Data Analysis\\
+Professor Maxime Pouokam\\
+University of California, Davis\\
+May 4, 2021
+\end{center}
+
+\clearpage
+
+```{r}
+smok = read.csv("data/Birthweight_reduced_kg_R.csv")
+#subset(smok, smoker == 1, select = c("Length", "Birthweight"))
+```
+
+# I. Introduction
+[background info] \
+In our project, we will highlight how smoking and other variables can lead to a decrease in birth weights in babies compared to non-smoking parents. [state question of interest]. In order to answer this, We will be using principal component analysis to analyze the data. \
+PCA a statistical technique that reduces a dimensionality of a dataset to make it interpretable while also preserving the variability of the data. [more explanation?] 
+
+
+
+
+# II. Summary of Data
+
+```{r}
+#Plots
+
+
+
+
+```
+
+
+
+
+
+
+# III. Analysis
+
+
+
+
+
+
+
+
+# IV. Interpretation
+
+
+
+
+
+
+
+# V. Conclusion
+
+
+
+
+
+
+
+
+
+
+\clearpage
+
+\subsection*{Appendix: R Script}
+
+```{r, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+
+```
