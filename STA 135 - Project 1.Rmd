@@ -21,6 +21,7 @@ May 4, 2021
 
 ```{r}
 smok = read.csv("data/Birthweight_reduced_kg_R.csv")
+smok = smok[,2:14]
 ```
 
 # I. Introduction
