@@ -223,13 +223,13 @@ panel_cor <- function(x, y){ #used to generate lower panel of pearson correlatio
   text(0.5, 0.5, txt, cex = cex.cor )
 }
 
-pairs(Birthweight~Length+Headcirc+Gestation+mnocig+fnocig+mage+fage,data=smok, 
+pairs(Birthweight~Length+Headcirc+Gestation+mnocig+fnocig+mage+fage+fheight+mheight+mppwt,data=smok, 
       lower.panel = panel_cor)
 
 ```
 
 ```{r warning=FALSE}
-scatterplotMatrix(~Birthweight+Length+Headcirc+Gestation+mnocig+fnocig+mage+fage, data = smok, reg.line = lm, smooth = TRUE, span = 0.5,
+scatterplotMatrix(~Birthweight+Length+Headcirc+Gestation+mnocig+fnocig+mage+fage+fheight+mheight+mppwt, data = smok, reg.line = lm, smooth = TRUE, span = 0.5,
 diagonal = "histogram")
 ```
 ```{r}
