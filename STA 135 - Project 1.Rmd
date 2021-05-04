@@ -21,10 +21,31 @@ May 4, 2021
 
 ```{r, warning = FALSE, message = FALSE}
 library(factoextra)
+library(knitr)
 #data
 smok = read.csv("data/Birthweight_reduced_kg_R.csv")
 smok = smok[,2:14]
 
+```
+
+```{r}
+new_print_loadings = function (x, digits = 3L, cutoff = 0.1, sort = FALSE, ...) 
+{
+  ## code from the original print.loadings function, without printing the variances
+    Lambda <- unclass(x)
+    p <- nrow(Lambda)
+    factors <- ncol(Lambda)
+    if (sort) {
+        mx <- max.col(abs(Lambda))
+        ind <- cbind(1L:p, mx)
+        mx[abs(Lambda[ind]) < 0.5] <- factors + 1
+        Lambda <- Lambda[order(mx, 1L:p), ]
+    }
+    fx <- setNames(format(round(Lambda, digits)), NULL)
+    nc <- nchar(fx[1L], type = "c")
+    fx[abs(Lambda) < cutoff] <- strrep(" ", nc)
+    return(fx)
+}
 ```
 
 # I. Introduction
@@ -107,9 +128,10 @@ Overall, because there is a difference in which variables impact the PCs, it hig
 It is further notable that smoking is not beneficial for babies based on the PC analysis of the dataset as a whole. When the Principle Components are found on the dataset using the correlation matrix, we find the following:
 
 ```{r}
+## PCA Analysis on whole data
 c = princomp(smok, cor = TRUE)
 l = summary(c, loadings = TRUE, cutoff = 0.15)$loadings
-summary(c, loadings = TRUE, cutoff = 0.15)
+summary(c, cutoff = 0.15)
 ```
 
 The number of PCs needed using the correlation matrix is only the first 8. Using only these 8 we are able to explain 92.56% of the variance of the data. 
@@ -122,39 +144,55 @@ fviz_eig(c, ncp = 13)
 
 In this plot we are able to see that the elbow curve at the 8th dimension reflects the calculations results showing a need of only 8 dimensions to preserve at least 90% of the variance of the data.
 
-Based on the loadings also seen above, we can see that when the physical features of the baby are all positive, as seen in the first four features of Comp. 1, 
+Based on the loadings 
+
 ```{r}
-l[,1][1:4]
+kable(new_print_loadings(l, cutoff = 0)[,1:7])
+kable(new_print_loadings(l, cutoff = 0)[,8:13])
+```
+we can see that when the physical features of the baby are all positive, as seen in the first four features of Comp. 1, 
+```{r}
+vars = l[,1][1:4]
+kable(matrix(as.numeric(vars), ncol = length(vars)), col.names = names(vars))
+
 ```
 that means that these features all correlate with eachother, meaning that a long gestation period is well correlated with a larger and healthier baby.
 
 That said, when birthweight is positive and another score in the component is negative, as seen with smoker in Comp. 2:
 ```{r}
-c(l[,2]['Birthweight'], l[, 2]['smoker'])
+vars = c(l[,2]['Birthweight'], l[, 2]['smoker'])
+kable(matrix(as.numeric(vars), ncol = length(vars)), col.names = names(vars))
+
 ``` 
 that is a sign that the attribute of being a smoker is not beneficial for the baby, since it will impact the physical features.
 
 As seen based on the PC analysis, these correlations become weaker as we iterate through the components This means that the later components contradicting that birthweight and smoking are actually the same sign score such as in Comp.11:
 ```{r}
-c(l[,11]['Birthweight'], l[, 11]['smoker'])
+vars = c(l[,11]['Birthweight'], l[, 11]['smoker'])
+kable(matrix(as.numeric(vars), ncol = length(vars)), col.names = names(vars))
+
 ```
 are negligible, since the later components explain very little proportion of the overall data variance.
 
 
 We can also see that the number of cigarettes smoked per day by mother's and father's are both, as expected, well correlated with the smoking status of the mother. This is also visible with the mother and father's ages, as seen by the data in Comp.2:
 ```{r}
-c(l[,2][5:7], l[, 2][10], l[, 2][12])
+vars = c(l[,2][5:7], l[, 2][10], l[, 2][12])
+kable(matrix(as.numeric(vars), ncol = length(vars)), col.names = names(vars))
 ```
 
 Based on these Principle Components of the correlation matrix, it is clear that a larger gestational period is a beneficial thing for a baby's health, however a greater count of smoked cigarettes is not. It is also clear that the father's smoking status, as shown by the number of cigarettes he smokes per day, is well correlated with the mothers.
 
 What is further interesting about this analysis is the lack of correlation of the physical attributes of the parents with the physical attributes of their newborn in comparison to that of the smoking features. While in Comp.1 we see that the physical features of the child and the physical features of the mother are similar scores:
 ```{r}
-c(l[,1][2:4], l[,1][8:9])
+vars = c(l[,1][2:4], l[,1][8:9])
+kable(matrix(as.numeric(vars), ncol = length(vars)), col.names = names(vars))
 ```
 we see only three principle components later in Comp.4 a contradiction:
 ```{r}
-c(l[,4][2:4], l[,4][8:9])
+vars = c(l[,4][2:4], l[,4][8:9])
+kable(matrix(as.numeric(vars), ncol = length(vars)), col.names = names(vars))
+
 ```
 
 This contradiction may be in a later component, however it is still a component that explains 8.7% of the overall variance of the data, and is relatively significant. It shows a reduced importance of the mother's physical features in explaining the physical features of her child, and a comparative increase in the impact of smoking.
@@ -164,13 +202,28 @@ Based on the analysis we can understand an estimation of what the physical featu
 
 We would also see that the physical features of the father and mother such as their height and weight do not factor into the features of their child nearly as much as their actions do when it comes to smoking or not. Based on only these Principle Components we are able to understand how the smoking features of the father and mother have a direct impact on the features of their baby, and subsequently the healthiness of their baby.
 
+```{r}
+make_table = function(mat) {
+}
+```
+
+
+```{r}
+kable(matrix(c(61, 5.1, 36, 43, 0, 43, 7, 165, 64, 38), ncol = 10),  col.names = c("length", "birthweight", "headcirc", "gestation", "smoker", "motherage", "mnocig", "mheight", "mppwt", "fage"))
+kable(matrix(c( 19, 45, 189), ncol = 3), col.names = c("fedyrs", "fnocig", "fheight"))
+```
+
+
 # V. Conclusion
 
 Generally, this analysis shows that while physical features of the parents do explain the physical features of their children, features regarding their smoking habits is another very strong influence. We also see that the smoking actions of the father may correlate with the smoking actions of the mother, meaning that it is likely if one smokes so does the other. This is interesting because it disproves any assumption that the actions of the father do not influence the characteristics of his child.
 
 In future analysis of this topic, it would be interesting to include alcohol consumption as another feature, as it has also been shown to have impacts on child gestation and birth features. We could also further analyze any correlation between the mother and father's non-physical features with each other, such as seeing if the more positive actions of the father in activities such as exercise or sleep influence the actions of the mother in similar ways that smoking does. Father's education level is also a feature in this dataset that does not correlate with other features and wasn't heavily analyzed, however maybe the addition of Mother's education level would show some deeper results.
 
-\clearpage
+```{r}
+
+```
+
 
 \subsection*{Appendix: R Script}
 
