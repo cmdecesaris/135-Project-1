@@ -20,6 +20,7 @@ May 4, 2021
 \clearpage
 
 ```{r}
+library(factoextra)
 smok = read.csv("data/Birthweight_reduced_kg_R.csv")
 smok = smok[,2:14]
 ```
@@ -27,10 +28,7 @@ smok = smok[,2:14]
 # I. Introduction
 Although low birth weighted infants can be healthy, under improper care or other circumstances, it can cause serious long-term health problems. A low birth weight is defined as being below 2.5kg. It can be caused by a multitude of factors \textemdash poor socioeconomic situation, premature birth, a mother's pre-existing health conditions, and more. In this project, we will highlight how smoking and other factors can cause low birth weights in infants in comparison to non-smoking parents. \
 \
-[state question of interest]. In order to answer this, we will be using principal component analysis to analyze the data. PCA is a statistical technique that reduces a dimensionality of a dataset to make it interpretable while also preserving the variability of the data. [more explanation?] We can use it to see what variables group together, identify possible outliers, recognize correlations between variables, and more. 
-
-
-
+We want to find out what variables related to smoking and birth data are related to eachother and how strong those relationship is. In order to answer this, we will be using principal component analysis to analyze the data. PCA is a statistical technique that reduces a dimensionality of a dataset to make it interpretable while also preserving the variability of the data. [more explanation?] We can use it to see what variables group together, identify possible outliers, recognize correlations between variables, and more. 
 
 # II. Summary of Data
 Before conducting PCA onto a dataset, we must first examine the data and decide on what variables we want to specifically look at by looking at different plots and summaries.  \
@@ -65,25 +63,61 @@ smoke = subset(smok, smoker == 1)
 \
 \
 ***Using the dataset for answering our question of interest. 
-
+-----------
 2.
 [Determine the number of PCs needed when using the correlation matrix.]
+3. Based on the PCs from the summary, 
 
-
-
-3. 
 [Interpret  the  PCs  chosen  from  the  previous  part. Make sure to specifically  comment  on  whether  positive  or negative scores (or scores close to 0) for a PC would likely be beneficial for baby.
 
 Hint: To help see which of the loadings are “away from zero”, one could set the cutoff argument value in summary()to something other than 0.0.  For example one can use a cutoff of 0.2. ]
-
-3. 
-[Interpret  the  PCs  chosen  from  the  previous  part. Make sure to specifically  comment  on  whether  positive  or negative scores (or scores close to 0) for a PC would likely be beneficial for baby.
-
-Hint: To help see which of the loadings are “away from zero”, one could set the cutoff argument value in summary()to something other than 0.0.  For example one can use a cutoff of 0.2. ]
-
+Based on the PCs we can see that the most beneficial variables are 
 
 4.
-[Examine plots of the PC scores and interpret them in the context of the problem. For example, what do you think of a particular patient (Baby).]
+[Examine plots of the PC scores and interpret them in the context of the problem. For example, what do you think of a particular patient (~~Bebe~~).]
+-----------
+
+It is further notable that smoking is not beneficial for babies based on the PC analysis of the dataset as a whole. When the Principle Components are found on the dataset using the correlation matrix, we find the following:
+
+```{r}
+c = princomp(smok, cor = TRUE)
+l = summary(c, loadings = TRUE, cutoff = 0.2)$loadings
+summary(c, loadings = TRUE, cutoff = 0.2)
+```
+
+The number of PCs needed using the correlation matrix is only the first 8. Using only these 8 we are able to explain 92.56% of the variance of the data. 
+
+This is further visualized using the following scree plot:
+
+```{r, echo = FALSE}
+fviz_eig(c, ncp = 13)
+```
+
+In this plot we are able to see that the elbow curve at the 8th dimension reflects the calculations results showing a need of only 8 dimensions to preserve at least 90% of the variance of the data.
+
+Based on the loadings also seen above, we can see that when both birthweight and another score are positive, as seen in Comp. 1 with birthweight and headcirc, 
+```{r}
+c(l[,1]['Birthweight'], l[, 1]['Headcirc'])
+```
+that means that a large head circumference is beneficial for the baby. 
+
+
+That said, when birthweight is positive and another score in the component is negative, as seen with smoker in Comp. 2:
+```{r}
+c(l[,2]['Birthweight'], l[, 2]['smoker'])
+``` 
+that is a sign that the attribute of being a smoker is not beneficial for the baby.
+
+As seen based on the PC analysis, these correlations become weaker as we iterate through the components This means that the later components contradicting that birthweight and smoking are actually the same sign score such as in Comp.11:
+```{r}
+c(l[,11]['Birthweight'], l[, 2]['smoker'])
+```
+are negligible, since the later components explain very little proportion of the overall data variance.
+
+Based on these Principle Components of the correlation matrix, it is clear that attributes such as head circumference are beneficial for the baby, however smoking is not.
+
+
+
 
 
 # IV. Interpretation
@@ -91,8 +125,7 @@ Rehash and summarize analysis section here.
 
 [Suppose a new baby is born after the PCA has been completed. The newly born has the characteristics as indicated in Table 1.  Through using the previous PCA results, discuss how this particular individual/baby would compare to the other babies.]
 
-
-
+Based on the 
 
 # V. Conclusion
 [What is your general conclusion and possible future work. By future work, I mean if you have more time what possible questions would you want to investigate ?]

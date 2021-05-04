@@ -1,6 +1,6 @@
 ---
-title: "STA 135 Project 1 [add a good title."
-author: "Trevor, Michelle, Christina De Cesaris"
+title: "Exploratory Analysis"
+author: "Trevor Carpenter, Michelle Tran, Christina De Cesaris"
 date: "4/30/2021"
 output: html_document
 ---
