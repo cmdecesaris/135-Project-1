@@ -160,15 +160,15 @@ c(l[,4][2:4], l[,4][8:9])
 This contradiction may be in a later component, however it is still a component that explains 8.7% of the overall variance of the data, and is relatively significant. It shows a reduced importance of the mother's physical features in explaining the physical features of her child, and a comparative increase in the impact of smoking.
 
 # IV. Interpretation
-Based on the analysis we can understand an estimation of what the physical features of a new baby not considered in this analysis will be using only a few features of the parents. For example, if the father is older he is more likely to smoke multiple cigarettes per day. In this case, based on the Principle Component Analysis we could expect that the mother also smokes multiple per day, and as such is marked as a smoker in the data. If this is in fact true we can predict that the gestation period, head circumference, birth weight, and length of this new baby will all be lower than expected. We would also see that the physical features of the father and mother such as their height and weight do not factor into the features of their child nearly as much as their actions do when it comes to smoking or not. Based on only these Principle Components we are able to understand how the features of the father and mother have a direct impact on the features of their baby, and subsequently the healthiness of their baby.
+Based on the analysis we can understand an estimation of what the physical features of a new baby not considered in this analysis will be using only a few features of the parents. For example, if the father is older he is more likely to smoke multiple cigarettes per day. In this case, based on the Principle Component Analysis we could expect that the mother also smokes multiple per day, and as such is marked as a smoker in the data. If this is in fact true we can predict that the gestation period will be shorter and the head circumference, birth weight, and length of this newborn baby will all be lower than expected. 
+
+We would also see that the physical features of the father and mother such as their height and weight do not factor into the features of their child nearly as much as their actions do when it comes to smoking or not. Based on only these Principle Components we are able to understand how the smoking features of the father and mother have a direct impact on the features of their baby, and subsequently the healthiness of their baby.
 
 # V. Conclusion
 
-Generally, this analysis shows the 
+Generally, this analysis shows that while physical features of the parents do explain the physical features of their children, features regarding their smoking habits is another very strong influence. We also see that the smoking actions of the father may correlate with the smoking actions of the mother, meaning that it is likely if one smokes so does the other. This is interesting because it disproves any assumption that the actions of the father do not influence the characteristics of his child.
 
-In future analysis of this topic, it would be useful to also understand 
-
-
+In future analysis of this topic, it would be interesting to include alcohol consumption as another feature, as it has also been shown to have impacts on child gestation and birth features. We could also further analyze any correlation between the mother and father's non-physical features with each other, such as seeing if the more positive actions of the father in activities such as exercise or sleep influence the actions of the mother in similar ways that smoking does. Father's education level is also a feature in this dataset that does not correlate with other features and wasn't heavily analyzed, however maybe the addition of Mother's education level would show some deeper results.
 
 \clearpage
 
