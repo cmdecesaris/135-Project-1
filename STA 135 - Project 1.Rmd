@@ -46,6 +46,16 @@ new_print_loadings = function (x, digits = 3L, cutoff = 0.1, sort = FALSE, ...)
     fx[abs(Lambda) < cutoff] <- strrep(" ", nc)
     return(fx)
 }
+
+new_print_sum = function (x, digits = 3L, loadings = x$print.loadings, cutoff = x$cutoff, 
+    ...) 
+{
+    vars <- x$sdev^2
+    vars <- vars/sum(vars)
+    return(rbind(`Standard deviation` = x$sdev, `Proportion of Variance` = vars, 
+        `Cumulative Proportion` = cumsum(vars)))
+}
+
 ```
 
 # I. Introduction
@@ -131,7 +141,8 @@ It is further notable that smoking is not beneficial for babies based on the PC 
 ## PCA Analysis on whole data
 c = princomp(smok, cor = TRUE)
 l = summary(c, loadings = TRUE, cutoff = 0.15)$loadings
-summary(c, cutoff = 0.15)
+kable(new_print_sum(c, cutoff = 0.15)[,1:7])
+kable(new_print_sum(c, cutoff = 0.15)[,8:13])
 ```
 
 The number of PCs needed using the correlation matrix is only the first 8. Using only these 8 we are able to explain 92.56% of the variance of the data. 
@@ -144,11 +155,10 @@ fviz_eig(c, ncp = 13)
 
 In this plot we are able to see that the elbow curve at the 8th dimension reflects the calculations results showing a need of only 8 dimensions to preserve at least 90% of the variance of the data.
 
-Based on the loadings 
-
+Based on the loadings:
 ```{r}
-kable(new_print_loadings(l, cutoff = 0)[,1:7])
-kable(new_print_loadings(l, cutoff = 0)[,8:13])
+kable(new_print_loadings(l, cutoff = 0.2)[,1:7])
+kable(new_print_loadings(l, cutoff = 0.2)[,8:13])
 ```
 we can see that when the physical features of the baby are all positive, as seen in the first four features of Comp. 1, 
 ```{r}
