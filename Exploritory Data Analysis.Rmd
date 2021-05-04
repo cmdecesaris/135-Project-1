@@ -11,13 +11,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r Libraries}
-library(dbplyr)
+library(dplyr)
 library(MASS)
 
 
 #graphics
-library(ggplot2) #graphing 
+library(ggplot2) 
+library(gplots)
 library(DT) 
+library(GGally)
+library(viridis)
+library(hrbrthemes)
+library(car)
 
 
 #data
@@ -35,18 +40,217 @@ str(smok)
 
 
 which(is.na(smok))
+
+
 ```
 
-```{r}
-plot(smok$Birthweight, smok$Gestation )
+```{r Summary Stat Sets}
+#full data, provided for exploritory purposes
+smok
+full = smok %>% dplyr::select(smoker,
+         Birthweight,
+         Length,
+         Headcirc,
+         Gestation,
+         mppwt,
+         mheight,
+         fheight,
+         mage,
+         fage,
+         mnocig,
+         fnocig,
+         fedyrs)
 
-plot(smok$smoker, smok$Birthweight)
+
+
+# Mean Other baby and family demos 
+
+demo_stat = smok %>%
+  group_by(smoker) %>%
+  dplyr::select(Birthweight,
+         Length,
+         Headcirc,
+         Gestation,
+         mage,
+         fage,
+         mnocig,
+         fnocig,
+         fedyrs) %>%
+  summarize_all(mean)%>%
+  mutate_if(is.numeric,
+            funs(round(.,2)))
+
+#Birthweight only summary stats
+bw_stat = smok %>%
+  group_by(smoker) %>%
+  dplyr::select(Birthweight) %>%
+  summarise(mean(Birthweight),
+            median(Birthweight),
+            sd(Birthweight),
+            max(Birthweight),
+            min(Birthweight))%>%
+  mutate_if(is.numeric,funs(round(.,2)))
+
+
+
+```
+
+```{r Interactive Data Tables}
+
+# Full Data
+full_dt=datatable(smok,
+          class = 'cell-border stripe',
+          caption = htmltools::tags$caption(style = 'caption-side: bottom; text-align: center;','Table 1: ',
+    htmltools::em('Full Dataset')))
+
+
+
+
+#demographics
+demo_names=c("Mother Smokes?","Birth Wt kg","Length cm",'Head Circ (cm)',"Gestation wks","Mother's Age","Father's Age","Mother Cigs per Day","Father Cigs per Day", "Father's Yrs Education") 
+
+demo_dt=datatable(demo_stat,
+          class = 'cell-border stripe',
+          caption = htmltools::tags$caption(style = 'caption-side: bottom; text-align: center;','Table 2: ',
+    htmltools::em('Smoking Vs Non-Smoking Summary Statistics')),
+    colnames = c(demo_names),
+    rownames = c("No","Yes"),
+    options = list(sDom  = 't'))
+
+
+
+# Birthweight Stats
+bw_names=c("Mother Smokes?","Mean","Median","Standard Deviation","Max","Min")
+
+#object displays table when run
+bw_dt=datatable(bw_stat,
+          class = 'cell-border stripe',
+          caption = htmltools::tags$caption(style = 'caption-side: bottom; text-align: center;','Table 3: ',
+    htmltools::em('Birth Weight Summary Statistics')),
+    colnames = c(bw_names),
+    rownames = c("No","Yes"),
+    options = list(sDom  = 't'))
+
+```
+
+
+```{r}
+full_dt
+bw_dt
+demo_dt
+```
+
+
+```{r}
+full$smoker=as.factor(full$smoker)
+ggparcoord(full, columns=2:5,
+           groupColumn = 1,
+           order = 2:13,
+           showPoints = F, 
+           title = "Parallel Coordinate Plot of Baby's Features",
+           alphaLines = .7) + 
+  theme_classic()+
+  theme(plot.title = element_text(size=10),
+     axis.text.x = element_text( angle = 45, hjust = 1))+  scale_color_manual(values=c( "darkgreen", "darkred") )+
+   scale_fill_discrete(name = "Mother Smokes?",labels = c("No","Yes"))
+
+
+
+```
+
+
+```{r}
+
+ggplot(smok,
+       aes(factor(smoker), 
+           Birthweight,
+            fill= factor(smoker)))+
+  geom_boxplot()+
+  labs(title="Birth Weights by Mother's Smoking Status",
+       x="Maternal Smoking Status",
+       y = "Birth Weight (kg)")+
+  scale_x_discrete(labels=c("Non-Smoker",
+                            "Smoker"))+
+  scale_fill_discrete(name = "Mother Smokes?",
+                      labels = c("No",
+                                 "Yes"))
 
 ```
 
 
 ```{r}
 #means plot with confidence intervals 
-plotmeans(Birthweight~smoker,data=smok,xlab="Status",ylab="Mean Birth Weight", main="Birth Weights: Smoking vs Non Smoking Mothers",legends=c("Non-Smoker","Smoker"),lwd=2,barwidth=2) 
+plotmeans(Birthweight~smoker,
+          data=smok,
+          xlab="Status",
+          ylab="Mean Birth Weight",
+          main="Birth Weights: Smoking vs Non Smoking Mothers",
+          legends=c("Non-Smoker","Smoker"),
+          lwd=2,
+          barwidth=2) 
 ```
+```{r}
+ggplot(smok,
+       aes(factor(smoker), 
+           Birthweight,
+           fill=factor(mage35)))+
+  geom_boxplot()+
+  labs(title="Birth Weights by Mother's Age and Smoking Status",
+       x="Maternal Smoking Status",
+       y = "Birth Weight (kg)")+
+  scale_x_discrete(labels=c("Non-Smoker",
+                            "Smoker"))+
+  scale_fill_discrete(name = "Mother Over 30?",
+                      labels = c("No",
+                                 "Yes"))
+
+#Do smoking mothers over 30 have babies more underweight than smoking mothers under 30? Looks like there is some relationship to mother's age and smoking status when it comes to birth weight.
+
+#Do babies born to smoking mothers under 30 have significant difference to those born to non-smoking mothers under 30?  
+
+#We do not have sufficient data to make an interpretation about mother's over 30 who are non-smoking. So is it age or smoking status here? Or some relation between them that PCA might be able to help us with. 
+```
+
+
+
+```{r}
+panel_cor <- function(x, y){ #used to generate lower panel of pearson correlation coefficents for pairs plot
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  r <- round(cor(x, y, use="complete.obs"), digits=2)
+  txt <- paste0("R = ", r)
+  cex.cor <- 0.8/strwidth(txt)
+  text(0.5, 0.5, txt, cex = cex.cor )
+}
+
+pairs(Birthweight~Length+Headcirc+Gestation+mnocig+fnocig+mage+fage,data=smok, 
+      lower.panel = panel_cor)
+
+```
+
+```{r warning=FALSE}
+scatterplotMatrix(~Birthweight+Length+Headcirc+Gestation+mnocig+fnocig+mage+fage, data = smok, reg.line = lm, smooth = TRUE, span = 0.5,
+diagonal = "histogram")
+```
+```{r}
+
+ggplot(smok, aes(x=mnocig, y=Birthweight, size = fnocig, color =mnocig)) +
+    geom_point(alpha=0.5)+
+   scale_size(name="# Father Smokes")
+
+
+
+ggplot(smok, aes(x=Gestation, y=Birthweight, size = mnocig)) +
+    geom_point(alpha=0.5)+
+   scale_size(name="# Mother Smokes")
+
+
+ggplot(smok,
+       aes(x=Length,
+           y=Birthweight,
+           size = mnocig)) +
+    geom_point(alpha=0.5)+
+   scale_size(name="# Mother Smokes")
+```
+
 

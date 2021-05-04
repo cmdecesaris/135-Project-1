@@ -19,10 +19,12 @@ May 4, 2021
 
 \clearpage
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 library(factoextra)
+#data
 smok = read.csv("data/Birthweight_reduced_kg_R.csv")
 smok = smok[,2:14]
+
 ```
 
 # I. Introduction
@@ -47,35 +49,60 @@ When conducting the analysis, we also want to know if we want to use the covaria
 
 
 # III. Analysis
+### Does a Mother's Smoking Status have an Effect on the Infant?
+If we compared babies according the their mother's smoking status, we can see what factors influence each other in both groups and compare them to see if they are different or similar. If there is a difference, it shows that a mother's smoking status does play a role in influencing their infant's growth. However, if they are similar, then something other than the mother's smoking status is causing a difference in an infant's growth. 
+
+```{r, results = 'hide'}
+######[If the overall goal is to compare babies according with their 
+###### mother’s smoking status, how would you proceed ?] 
+
+#split the data
+nonsmoke = subset(smok, smoker == 0, select = -c(5))
+smoke = subset(smok, smoker == 1, select = -c(5))
+
+#pca and summary
+##nonsmoking mothers
+pca.nonsmoke =  princomp(formula = ~ Length + Birthweight + Headcirc + 
+                           Gestation + mage + mheight + mppwt + fage + 
+                           fedyrs + fnocig + fheight, 
+                         data = nonsmoke, cor = TRUE, scores = TRUE)
+summary(pca.nonsmoke, loadings = TRUE, cutoff = 0.0)
 
 
-1. 
-[If the overall goal is to compare babies according with their mother’s smoking status, how would you proceed ?
 
-My suggestion:  Run PCs on these two groups (use the smoking status to split the data and run PCs on them).Then comment on their similarities and differences.  You can compare their PCs, scree plots, etc ...] \
+##smoking mothers
+pca.smoke = princomp(formula = ~ Length + Birthweight + Headcirc + 
+                           Gestation + mage + mheight + mppwt + fage + 
+                           fedyrs + fnocig + fheight, 
+                         data = smoke, cor = TRUE, scores = TRUE)
+summary(pca.smoke, loadings = TRUE, cutoff = 0.0)
 
-```{r}
-nonsmoke = subset(smok, smoker == 0)
-smoke = subset(smok, smoker == 1)
-#use: select = c("Length", "Birthweight", "other variables") in subset fcn for specific columns 
 ```
 
+When analyzing the data via PCA, we found that both datasets only needed the first 6 PCs to achieve over 90% explanation of the variance. The majority of the variance is explained by the first PC at about 40% as seen from both scree plots below. From there it tapers off and after PC 6, each PC explains less than 5% of the total variance.
+
+```{r, warning= F, message = F, fig.height= 3}
+#scree plots for nonsmoking vs. smoking mothers datasets
+library(factoextra)
+
+fviz_eig(pca.nonsmoke, main = "Scree Plot for Non-Smoking Mothers Dataset")
+fviz_eig(pca.smoke, main = "Scree Plot for Smoking Mothers Dataset")
+
+```
+
+The non-smoking mothers dataset shows that the first PC is based mainly on body measurements of the baby, mother, and father. The gestation period and the infant's weight and length predominantly postively influences this component. This is similar to the smoking mothers dataset, however, there is also an emphasis on the parent's age that was not seen in the non-smoking dataset. For the second PC, in the non-smoking dataset, it was postively influenced by the parent's age. Whereas the other dataset was the opposite in that the parent's age had a negative impact and the parent's height had a postive impact. 
+
+```{r, figures-side, fig.show="hold", out.width="57%"}
+#biplots
+biplot(x = pca.nonsmoke, main = "Biplot for Non-Smoking Mothers Data",
+       pc.biplot = TRUE)
+biplot(x = pca.smoke, main = "Biplot for Smoking Mothers Data",
+       pc.biplot = TRUE)
+```
+
+For PCs 3-6, the most notable similarity between the two groups is that the parent's age becomes less of an influence on the PCs. In the smoking dataset, the father's characteristics\textemdash education and number of cigarettes\textemdash negatively impacts the PCs. Whereas in the non-smoking dataset, the factors seem relatively spread out across the PCs and its hard to interpret them. \
 \
-\
-***Using the dataset for answering our question of interest. 
------------
-2.
-[Determine the number of PCs needed when using the correlation matrix.]
-3. Based on the PCs from the summary, 
-
-[Interpret  the  PCs  chosen  from  the  previous  part. Make sure to specifically  comment  on  whether  positive  or negative scores (or scores close to 0) for a PC would likely be beneficial for baby.
-
-Hint: To help see which of the loadings are “away from zero”, one could set the cutoff argument value in summary()to something other than 0.0.  For example one can use a cutoff of 0.2. ]
-Based on the PCs we can see that the most beneficial variables are 
-
-4.
-[Examine plots of the PC scores and interpret them in the context of the problem. For example, what do you think of a particular patient (~~Bebe~~).]
------------
+Overall, because there is a difference in which variables impact the PCs, it highlights that a mother's smoking status does impact an infant's growth.
 
 It is further notable that smoking is not beneficial for babies based on the PC analysis of the dataset as a whole. When the Principle Components are found on the dataset using the correlation matrix, we find the following:
 
@@ -114,11 +141,9 @@ c(l[,11]['Birthweight'], l[, 2]['smoker'])
 ```
 are negligible, since the later components explain very little proportion of the overall data variance.
 
-Based on these Principle Components of the correlation matrix, it is clear that attributes such as head circumference are beneficial for the baby, however smoking is not.
+Based on these Principle Components of the correlation matrix, it is clear thatother physical attributes such as head circumference are beneficial for the baby, however smoking is not.
 
-
-
-
+We can also see that the number of cigarettes smoked per day by mother's and father's are both, expectedly, well correlated with the smoking status, and interestingly also the number of year's of the Father's education.
 
 # IV. Interpretation
 Rehash and summarize analysis section here.
