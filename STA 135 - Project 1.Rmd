@@ -61,7 +61,7 @@ new_print_sum = function (x, digits = 3L, loadings = x$print.loadings, cutoff = 
 # I. Introduction
 Although low birth weighted infants can be healthy, under improper care or other circumstances, it can cause serious long-term health problems. A low birth weight is defined as being below 2.5kg. It can be caused by a multitude of factors \textemdash poor socioeconomic situation, premature birth, a mother's pre-existing health conditions, and more. In this project, we will highlight how smoking and other factors can cause low birth weights in infants in comparison to non-smoking parents. \
 \
-We want to find out what variables related to smoking and birth data are related to eachother and how strong those relationship is. In order to answer this, we will be using principal component analysis to analyze the data. PCA is a statistical technique that reduces a dimensionality of a dataset to make it interpretable while also preserving the variability of the data. [more explanation?] We can use it to see what variables group together, identify possible outliers, recognize correlations between variables, and more. 
+We want to find out what variables related to smoking and birth data are related to eachother and how strong those relationship is. In order to answer this, we will be using principal component analysis to analyze the data. PCA is a statistical technique that reduces a dimensionality of a dataset to make it interpretable while also preserving the variability of the data. We can use it to see what variables group together, identify possible outliers, recognize correlations between variables, and more. 
 
 # II. Summary of Data
 Before conducting PCA onto a dataset, we must first examine the data and decide on what variables we want to specifically look at by looking at different plots and summaries.  \
@@ -155,10 +155,10 @@ fviz_eig(c, ncp = 13)
 
 In this plot we are able to see that the elbow curve at the 8th dimension reflects the calculations results showing a need of only 8 dimensions to preserve at least 90% of the variance of the data.
 
-Based on the loadings:
+Based on the loadings with a cutoff value of 0.15:
 ```{r}
-kable(new_print_loadings(l, cutoff = 0.2)[,1:7])
-kable(new_print_loadings(l, cutoff = 0.2)[,8:13])
+kable(new_print_loadings(l, cutoff = 0.15)[,1:7])
+kable(new_print_loadings(l, cutoff = 0.15)[,8:13])
 ```
 we can see that when the physical features of the baby are all positive, as seen in the first four features of Comp. 1, 
 ```{r}
@@ -176,16 +176,15 @@ kable(matrix(as.numeric(vars), ncol = length(vars)), col.names = names(vars))
 ``` 
 that is a sign that the attribute of being a smoker is not beneficial for the baby, since it will impact the physical features.
 
-As seen based on the PC analysis, these correlations become weaker as we iterate through the components This means that the later components contradicting that birthweight and smoking are actually the same sign score such as in Comp.11:
+As seen based on the PC analysis, these correlations become weaker as we iterate through the components This means that the later components contradicting that birth weight and smoking are actually the same sign score, such as in Comp.11:
 ```{r}
 vars = c(l[,11]['Birthweight'], l[, 11]['smoker'])
 kable(matrix(as.numeric(vars), ncol = length(vars)), col.names = names(vars))
 
 ```
-are negligible, since the later components explain very little proportion of the overall data variance.
+are negligible, since the later components explain very little proportion of the overall data variance. Comp. 11 itself only explains about 1.2% of the variance, so findings such as this are far less relevant as in Comp. 2 which explains almost 20% of the variance.
 
-
-We can also see that the number of cigarettes smoked per day by mother's and father's are both, as expected, well correlated with the smoking status of the mother. This is also visible with the mother and father's ages, as seen by the data in Comp.2:
+We can also see that the number of cigarettes smoked per day by mothers and fathers are both, as expected, well correlated with the smoking status of the mother. This is also visible with the mother and father's ages, as seen by the data in Comp.2:
 ```{r}
 vars = c(l[,2][5:7], l[, 2][10], l[, 2][12])
 kable(matrix(as.numeric(vars), ncol = length(vars)), col.names = names(vars))
@@ -212,28 +211,19 @@ Based on the analysis we can understand an estimation of what the physical featu
 
 We would also see that the physical features of the father and mother such as their height and weight do not factor into the features of their child nearly as much as their actions do when it comes to smoking or not. Based on only these Principle Components we are able to understand how the smoking features of the father and mother have a direct impact on the features of their baby, and subsequently the healthiness of their baby.
 
-```{r}
-make_table = function(mat) {
-}
-```
-
-
+Let's also take for an example with the baby features as follows:
 ```{r}
 kable(matrix(c(61, 5.1, 36, 43, 0, 43, 7, 165, 64, 38), ncol = 10),  col.names = c("length", "birthweight", "headcirc", "gestation", "smoker", "motherage", "mnocig", "mheight", "mppwt", "fage"))
 kable(matrix(c( 19, 45, 189), ncol = 3), col.names = c("fedyrs", "fnocig", "fheight"))
 ```
 
+From the PC analysis, we can understand how well this new data point matches with the data we have previously seen. The number of cigarettes smoked by the mother is 7, yet she is marked as a nonsmoker, which is unlike any data we have previously seen and doesn't really make sense. 7 is around the average amount for the mothers in our dataset to smoke, however the father is on the upper end of the dataset. Other physical characteristics of the parents are average based on what we have previously seen. Based on all of this, we would expect the baby to physically be smaller than the average child. However, the baby is in the 75th percentile for all of its physical characteristics (gestational period, length, birthweight, and head circumference), which is highly unusual especially giving the parent data. Because of this, we would conclude that this child is an outlier and does not match with the rest of the data in this Principle Component Analysis study.
 
 # V. Conclusion
 
-Generally, this analysis shows that while physical features of the parents do explain the physical features of their children, features regarding their smoking habits is another very strong influence. We also see that the smoking actions of the father may correlate with the smoking actions of the mother, meaning that it is likely if one smokes so does the other. This is interesting because it disproves any assumption that the actions of the father do not influence the characteristics of his child.
+Generally, this analysis shows that while physical features of the parents do explain the physical features of their children, features regarding their smoking habits seems to be a stronger influence. We also see that the smoking actions of the father may correlate with the smoking actions of the mother, meaning that it is likely if one smokes so does the other. This is interesting because it disproves any assumption that the actions of the father do not influence the characteristics of his child.
 
 In future analysis of this topic, it would be interesting to include alcohol consumption as another feature, as it has also been shown to have impacts on child gestation and birth features. We could also further analyze any correlation between the mother and father's non-physical features with each other, such as seeing if the more positive actions of the father in activities such as exercise or sleep influence the actions of the mother in similar ways that smoking does. Father's education level is also a feature in this dataset that does not correlate with other features and wasn't heavily analyzed, however maybe the addition of Mother's education level would show some deeper results.
-
-```{r}
-
-```
-
 
 \subsection*{Appendix: R Script}
 
