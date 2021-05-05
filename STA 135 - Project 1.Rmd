@@ -22,6 +22,20 @@ May 4, 2021
 ```{r, warning = FALSE, message = FALSE}
 library(factoextra)
 library(knitr)
+
+library(dplyr)
+library(MASS)
+
+
+#graphics
+library(ggplot2) 
+library(gplots)
+library(DT) 
+library(GGally)
+library(viridis)
+library(hrbrthemes)
+library(car)
+
 #data
 smok = read.csv("data/Birthweight_reduced_kg_R.csv")
 smok = smok[,2:14]
@@ -64,19 +78,267 @@ Although low birth weighted infants can be healthy, under improper care or other
 We want to find out what variables related to smoking and birth data are related to eachother and how strong those relationship is. In order to answer this, we will be using principal component analysis to analyze the data. PCA is a statistical technique that reduces a dimensionality of a dataset to make it interpretable while also preserving the variability of the data. We can use it to see what variables group together, identify possible outliers, recognize correlations between variables, and more. 
 
 # II. Summary of Data
-Before conducting PCA onto a dataset, we must first examine the data and decide on what variables we want to specifically look at by looking at different plots and summaries.  \
+Before conducting PCA onto a dataset, we must first examine the data and decide on what variables we want to specifically look at by looking at different plots and summaries. 
 
-```{r}
-#Plots
 
+```{r Summary Stat Sets}
+#full data, provided for exploritory purposes
+
+full = smok %>% dplyr::select(smoker,
+         Birthweight,
+         Length,
+         Headcirc,
+         Gestation,
+         mppwt,
+         mheight,
+         fheight,
+         mage,
+         fage,
+         mnocig,
+         fnocig,
+         fedyrs)
+
+
+
+# Mean Other baby and family demos 
+
+demo_stat = smok %>%
+  group_by(smoker) %>%
+  dplyr::select(Birthweight,
+         Length,
+         Headcirc,
+         Gestation,
+         mage,
+         fage,
+         mnocig,
+         fnocig,
+         fedyrs) %>%
+  summarize_all(mean)%>%
+  mutate_if(is.numeric,
+            funs(round(.,2)))
+
+#Birthweight only summary stats
+bw_stat = smok %>%
+  group_by(smoker) %>%
+  dplyr::select(Birthweight) %>%
+  summarise(mean(Birthweight),
+            median(Birthweight),
+            sd(Birthweight),
+            max(Birthweight),
+            min(Birthweight))%>%
+  mutate_if(is.numeric,funs(round(.,2)))
 
 
 
 ```
-The plot above shows.... \
-\
 
-When conducting the analysis, we also want to know if we want to use the covariance matrix or the correlation matrix. [Discuss the positive and negative aspects of using the covariance matrix for a PCA rather than the correlation matrix.]
+```{r Interactive Data Tables}
+
+# Full Data
+full_dt=datatable(smok,
+          class = 'cell-border stripe',
+          caption = htmltools::tags$caption(style = 'caption-side: bottom; text-align: center;','Table 1: ',
+    htmltools::em('Full Dataset')))
+
+
+
+
+#demographics
+demo_names=c("Mother Smokes?","Birth Wt kg","Length cm",'Head Circ (cm)',"Gestation wks","Mother's Age","Father's Age","Mother Cigs per Day","Father Cigs per Day", "Father's Yrs Education") 
+
+demo_dt=datatable(demo_stat,
+          class = 'cell-border stripe',
+          caption = htmltools::tags$caption(style = 'caption-side: bottom; text-align: center;',
+    htmltools::em('Smoking Vs Non-Smoking Averages')),
+    colnames = c(demo_names),
+    rownames = c("No","Yes"),
+    options = list(sDom  = 't'))
+
+
+
+# Birthweight Stats
+bw_names=c("Mother Smokes?","Mean","Median","Standard Deviation","Max","Min")
+
+#object displays table when run
+bw_dt=datatable(bw_stat,
+          class = 'cell-border stripe',
+          caption = htmltools::tags$caption(style = 'caption-side: bottom; text-align: center;',
+    htmltools::em('Birth Weight Summary Statistics')),
+    colnames = c(bw_names),
+    rownames = c("No","Yes"),
+    options = list(sDom  = 't'))
+
+```
+
+
+```{r}
+full_dt
+
+
+```
+
+The full dataset is provided above for visualization purposes. It contains a total of 42 observations of 16 variables. 
+
+```{r}
+bw_dt
+
+```
+This study focus on the dependent variable of birth weight. To obtain a better understanding of the differences in birth weight between smoking and non-smoking mothers, the chart above groups babies by their mother's smoking status and calculates the respective birth weight summary statistics. From these numbers, babies with non-smoking mothers appear to have high mean and median bith weights.
+
+```{r}
+demo_dt
+```
+
+While birth weights are our main variable of interest, it is important to see if a mother's smoking status affects other characteristics of the baby. Other demographics of the father are also provided. 
+From this chart, babies from non-smoking mothers have slightly higher average birth weight, gestation time, head circumference, and length. It is also important to look at the other demographics in play. For one, notice that the average age of smoking mothers is higher than that of non-smoking mothers for this data set, so while we can say smoking is correlated to low birth weight, it is likely that other factors and intersections of these factors also play a role. 
+
+```{r}
+full$smoker=as.factor(full$smoker)
+parallelplot1=ggparcoord(full, columns=2:12,
+           groupColumn = 1,
+           order = 2:13,
+           showPoints = F, 
+           title = "Parallel Coordinate Plot of Baby's Features",
+           alphaLines = .7) + 
+  theme_classic()+
+  theme(plot.title = element_text(size=10),
+     axis.text.x = element_text( angle = 45, hjust = 1))+  scale_color_manual(values=c( "darkgreen", "darkred") )+
+   scale_fill_discrete(name = "Mother Smokes?",labels = c("No","Yes"))
+
+parallelplot1
+
+```
+
+```{r}
+full$smoker=as.factor(full$smoker)
+parallelplot2=ggparcoord(full, columns=2:5,
+           groupColumn = 1,
+           order = 2:13,
+           showPoints = F, 
+           title = "Parallel Coordinate Plot of Baby's Features",
+           alphaLines = .7) + 
+  theme_classic()+
+  theme(plot.title = element_text(size=10),
+     axis.text.x = element_text( angle = 45, hjust = 1))+  scale_color_manual(values=c( "darkgreen", "darkred") )+
+   scale_fill_discrete(name = "Mother Smokes?",labels = c("No","Yes"))
+
+parallelplot2
+```
+
+
+The parallel plots above seeks to demonstrate the relationship between variables. In the case of these plots, smoker = 0 represents a non smoking mother.
+
+The second plot is the first plot but only containing the features specific to the babies, as the second plot is complicated. The values on the y-axis have been normalized, and from the plot alone, it appears that smoking mothers have babies with lower birth weight, length, head circumference, and gestation periods on average. This graph however also reveals there are outliers. It can be seen that there is a baby born to a non-smoking mother which is substantially small in length. The second plot also indicates a relationship between mothers and fathers who smoke. A baby who's mother smokes is more likely to have a father who smokes. 
+
+```{r}
+
+boxplot=ggplot(smok,
+       aes(factor(smoker), 
+           Birthweight,
+            fill= factor(smoker)))+
+  geom_boxplot()+
+  labs(title="Birth Weights by Mother's Smoking Status",
+       x="Maternal Smoking Status",
+       y = "Birth Weight (kg)")+
+  scale_x_discrete(labels=c("Non-Smoker",
+                            "Smoker"))+
+  scale_fill_discrete(name = "Mother Smokes?",
+                      labels = c("No",
+                                 "Yes"))
+
+boxplot
+```
+
+
+```{r}
+#means plot with confidence intervals 
+mean_plot=plotmeans(Birthweight~smoker,
+          data=smok,
+          xlab="Status",
+          ylab="Mean Birth Weight",
+          main="Birth Weights: Smoking vs Non Smoking Mothers",
+          legends=c("Non-Smoker","Smoker"),
+          lwd=2,
+          barwidth=2) 
+
+mean_plot
+```
+
+The boxplot and meansplot essentially tell us what has already been established: mother's who smoke have lighter babies on average. The confidence intervals present in both of these graphs raise questions to whether the difference between baby weights in smoking and non-smoking mothers is significant, however, the exploration of this question is beyond the current scope of the class. 
+
+
+
+```{r}
+panel_cor <- function(x, y){ #used to generate lower panel of pearson correlation coefficents for pairs plot
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  r <- round(cor(x, y, use="complete.obs"), digits=2)
+  txt <- paste0("R = ", r)
+  cex.cor <- 0.8/strwidth(txt)
+  text(0.5, 0.5, txt, cex = cex.cor )
+}
+
+pairs_graph=pairs(Birthweight~Length+Headcirc+Gestation+mnocig+fnocig+mage+fage+fheight+mheight+mppwt,data=smok, 
+      lower.panel = panel_cor)
+
+pairs_graph
+
+
+```
+
+
+
+
+```{r warning=FALSE}
+corroMat = scatterplotMatrix(~Birthweight+Length+Headcirc+Gestation+mnocig+fnocig+mage+fage+fheight+mheight+mppwt, data = smok, reg.line = lm, smooth = TRUE, span = 0.5,
+diagonal = "histogram")
+
+corroMat
+```
+
+The correlation scatter plots show a weak negative correlation between the number of cigarettes a mother smokes and the baby's birth weight. There is a weak correlation between the number of cigarettes the mother smokes and the baby's other features as well. It appears the gestation time and length are most highly correlated with birth weight.  
+
+
+```{r}
+
+mcig_bw=ggplot(smok, aes(x=mnocig, y=Birthweight, size = mnocig, color =fnocig)) +
+    geom_point(alpha=0.5)+
+   scale_size(name="# Cigs Mother Smokes")+
+   labs(color='# Cigs Father Smokes')
+
+
+
+gest_birthwt=ggplot(smok, aes(x=Gestation, y=Birthweight, size = mnocig)) +
+    geom_point(alpha=0.5)+
+   scale_size(name="# Cigs Mother Smokes")
+
+
+len_bw=ggplot(smok,
+       aes(x=Length,
+           y=Birthweight,
+           size = mnocig)) +
+    geom_point(alpha=0.5)+
+   scale_size(name="# Cigs Mother Smokes")
+```
+
+```{r}
+mcig_bw
+```
+
+The plot above explores the relationship between parental smoking habits and birth weight. The number of cigarettes smoked by the father do not seem to be correlated with the baby's birth weight directly, however, mothers who's husbands smoke appear to smoke more than those who's husbands do not smoke. Ultimately, the mother's smoking habits appear negatively correlated to baby weight.
+
+```{r}
+gest_birthwt
+
+len_bw
+```
+
+Following up on the high correlation between birth weight and gestation period, it does seem that gestation period has a higher correlation between birth weight than the mother's smoking status. Babies with longer gestation periods tend to weight more. It also appears that non-smoking mothers have higher gestation periods and birth weights than smoking mothers, but this difference is subtle. 
+
+When it comes to birth weight and length, a similar relationship is observed. It can be noted that non-smoking mothers have heavier and longer babies than smoking mothers. However, the relationship between length and weight is much more correlated than that of the number of cigarettes the mother smokes and either of the variables. 
+
+
+When conducting the analysis, we also want to know if we want to use the covariance matrix or the correlation matrix. The covariance matrix can be used for PCA when the scales of all varaibles are the same. In the case where variables differ in scale, it is best to use the correlation matrix for consistency. For this data set, the correlation matrix will be used when conducting PCA as units such as number of cigarrets smoked and baby weight in kg are far from on the same scale. 
 
 
 # III. Analysis
