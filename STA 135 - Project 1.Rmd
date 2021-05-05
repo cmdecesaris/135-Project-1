@@ -131,7 +131,7 @@ Smoking Mothers Loadings\\
 kable(new_print_loadings(u, cutoff = 0.1)[,1:6])
 ```
 
-For PCs 3-6, the most notable similarity between the two groups is that they agree that the father's number of cigarettes has a negative influence on the health of the baby. In the smoking dataset, the father's characteristics\textemdash education and number of cigarettes\textemdash predominantly impacts the PCs negatively. Whereas in the non-smoking dataset, the significant variables seem relatively spread out across the PCs and it becomes harder to interpret them. 
+For PCs 3-6, the most notable similarity between the two groups is that they agree that the father's number of cigarettes has a negative influence on the health of the baby. In the smoking dataset, the parent's number of cigarettes predominantly impacts the baby's health negatively. Whereas in the non-smoking dataset, the significant variables seem relatively spread out across the PCs and it becomes harder to interpret them. 
 
 Overall, because there is a difference in which variables impact the PCs, it highlights that a mother's smoking status does impact an infant's growth.
 
@@ -224,6 +224,8 @@ From the PC analysis, we can understand how well this new data point matches wit
 Generally, this analysis shows that while physical features of the parents do explain the physical features of their children, features regarding their smoking habits seems to be a stronger influence. We also see that the smoking actions of the father may correlate with the smoking actions of the mother, meaning that it is likely if one smokes so does the other. This is interesting because it disproves any assumption that the actions of the father do not influence the characteristics of his child.
 
 In future analysis of this topic, it would be interesting to include alcohol consumption as another feature, as it has also been shown to have impacts on child gestation and birth features. We could also further analyze any correlation between the mother and father's non-physical features with each other, such as seeing if the more positive actions of the father in activities such as exercise or sleep influence the actions of the mother in similar ways that smoking does. Father's education level is also a feature in this dataset that does not correlate with other features and wasn't heavily analyzed, however maybe the addition of Mother's education level would show some deeper results.
+
+\clearpage
 
 \subsection*{Appendix: R Script}
 
