@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = F)
 
 \begin{center}
 \vspace*{10\baselineskip}
-\LARGE{\textbf{Project 1: PCA Analysis on a Birth Weight Dataset}}\\
+\LARGE{\textbf{Project 1: PCA on a Birth Weight Dataset}}\\
 \vspace*{19\baselineskip}
 \normalsize{Trevor Carpenter, Christina De Cesaris, Michelle Tran}\\
 STA 135: Multivariate Data Analysis\\
@@ -342,7 +342,6 @@ When conducting the analysis, we also want to know if we want to use the covaria
 
 
 # III. Analysis
-### Does a Mother's Smoking Status have an Effect on the Infant?
 If we compared babies according the their mother's smoking status, we can see what factors influence each other in both groups and compare them to see if they are different or similar. If there is a difference, it shows that a mother's smoking status does play a role in influencing their infant's growth. However, if they are similar, then something other than the mother's smoking status is causing a difference in an infant's growth. 
 
 ```{r, results = 'hide'}
@@ -350,29 +349,22 @@ If we compared babies according the their mother's smoking status, we can see wh
 ###### mother’s smoking status, how would you proceed ?] 
 
 #split the data
-nonsmoke = subset(smok, smoker == 0, select = -c(5))
+nonsmoke = subset(smok, smoker == 0, select = -c(5, 7))
 smoke = subset(smok, smoker == 1, select = -c(5))
 
 #pca and summary
 ##nonsmoking mothers
-pca.nonsmoke =  princomp(formula = ~ Length + Birthweight + Headcirc + 
-                           Gestation + mage + mheight + mppwt + fage + 
-                           fedyrs + fnocig + fheight, 
-                         data = nonsmoke, cor = TRUE, scores = TRUE)
-summary(pca.nonsmoke, loadings = TRUE, cutoff = 0.0)
-
+pca.nonsmoke =  princomp(nonsmoke, cor = TRUE)
+t = summary(pca.nonsmoke, loadings = TRUE, cutoff = 0.1)$loadings
 
 
 ##smoking mothers
-pca.smoke = princomp(formula = ~ Length + Birthweight + Headcirc + 
-                           Gestation + mage + mheight + mppwt + fage + 
-                           fedyrs + fnocig + fheight, 
-                         data = smoke, cor = TRUE, scores = TRUE)
-summary(pca.smoke, loadings = TRUE, cutoff = 0.0)
+pca.smoke = princomp(smoke, cor = TRUE)
+u = summary(pca.smoke, loadings = TRUE, cutoff = 0.1)$loadings
 
 ```
 
-When analyzing the data via PCA, we found that both datasets only needed the first 6 PCs to achieve over 90% explanation of the variance. The majority of the variance is explained by the first PC at about 40% as seen from both scree plots below. From there it tapers off and after PC 6, each PC explains less than 5% of the total variance.
+When analyzing the data via PCA, we found that both datasets only needed the first 6 PCs to achieve over 90% explanation of the variance. The majority of the variance is explained by the first PC at about 40% as seen from both scree plots below. From there it tapers off and after the 6th principal component, it reaches a plateau and each of the remaining PCs explains less than 3% of the total variance.
 
 ```{r, warning= F, message = F, fig.height= 3}
 #scree plots for nonsmoking vs. smoking mothers datasets
@@ -383,18 +375,26 @@ fviz_eig(pca.smoke, main = "Scree Plot for Smoking Mothers Dataset")
 
 ```
 
-The non-smoking mothers dataset shows that the first PC is based mainly on body measurements of the baby, mother, and father. The gestation period and the infant's weight and length predominantly postively influences this component. This is similar to the smoking mothers dataset, however, there is also an emphasis on the parent's age that was not seen in the non-smoking dataset. For the second PC, in the non-smoking dataset, it was postively influenced by the parent's age. Whereas the other dataset was the opposite in that the parent's age had a negative impact and the parent's height had a postive impact. 
+The non-smoking mothers dataset shows that the first PC is based mainly on the positive correlation of body measurements of the baby, mother, and father; specifically, the gestation period, the parents' heights, and the infant's weight and length are the most significant here. This means that genetics and longer gestation period is correlated with a healthier baby. In comparison to the smoking mothers dataset, although they are similar, there is more emphasis on the parent's age than height. Overall, both confirm that gestation plays an important role in a healthier baby. 
 
-```{r, figures-side, fig.show="hold", out.width="57%"}
-#biplots
-biplot(x = pca.nonsmoke, main = "Biplot for Non-Smoking Mothers Data",
-       pc.biplot = TRUE)
-biplot(x = pca.smoke, main = "Biplot for Smoking Mothers Data",
-       pc.biplot = TRUE)
+For the second PC, in the non-smoking dataset, it was positively influenced by the parent's age. This highlights that both datasets agree that the parent's age is important in determining a healthy baby. For the smoking data set, the second PC negatively correlates the mother's height, pregnancy weight, and number of cigarettes together. This correlation is saying that an increase in these values means an unhealthy baby. But in PC 1 for the non-smoking dataset, a mother's height meant it would positively impact the baby's health. This confirms that smoking status does in fact effect a baby's health. 
+
+\begin{center}
+Non-Smoking Mothers Loadings\\
+\end{center}
+```{r}
+kable(new_print_loadings(t, cutoff = 0.1)[,1:6])
 ```
 
-For PCs 3-6, the most notable similarity between the two groups is that the parent's age becomes less of an influence on the PCs. In the smoking dataset, the father's characteristics\textemdash education and number of cigarettes\textemdash negatively impacts the PCs. Whereas in the non-smoking dataset, the factors seem relatively spread out across the PCs and its hard to interpret them. \
-\
+\begin{center}
+Smoking Mothers Loadings\\
+\end{center}
+```{r}
+kable(new_print_loadings(u, cutoff = 0.1)[,1:6])
+```
+
+For PCs 3-6, the most notable similarity between the two groups is that they agree that the father's number of cigarettes has a negative influence on the health of the baby. In the smoking dataset, the parent's number of cigarettes predominantly impacts the baby's health negatively. Whereas in the non-smoking dataset, the significant variables seem relatively spread out across the PCs and it becomes harder to interpret them. 
+
 Overall, because there is a difference in which variables impact the PCs, it highlights that a mother's smoking status does impact an infant's growth.
 
 It is further notable that smoking is not beneficial for babies based on the PC analysis of the dataset as a whole. When the Principle Components are found on the dataset using the correlation matrix, we find the following:
@@ -486,6 +486,8 @@ From the PC analysis, we can understand how well this new data point matches wit
 Generally, this analysis shows that while physical features of the parents do explain the physical features of their children, features regarding their smoking habits seems to be a stronger influence. We also see that the smoking actions of the father may correlate with the smoking actions of the mother, meaning that it is likely if one smokes so does the other. This is interesting because it disproves any assumption that the actions of the father do not influence the characteristics of his child.
 
 In future analysis of this topic, it would be interesting to include alcohol consumption as another feature, as it has also been shown to have impacts on child gestation and birth features. We could also further analyze any correlation between the mother and father's non-physical features with each other, such as seeing if the more positive actions of the father in activities such as exercise or sleep influence the actions of the mother in similar ways that smoking does. Father's education level is also a feature in this dataset that does not correlate with other features and wasn't heavily analyzed, however maybe the addition of Mother's education level would show some deeper results.
+
+\clearpage
 
 \subsection*{Appendix: R Script}
 
