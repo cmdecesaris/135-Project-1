@@ -134,7 +134,7 @@ bw_stat = smok %>%
 
 ```
 
-```{r Interactive Data Tables}
+```{r Interactive Data Tables, eval=FALSE, include=FALSE}
 
 # Full Data
 full_dt=datatable(smok,
@@ -174,21 +174,21 @@ bw_dt=datatable(bw_stat,
 
 
 ```{r}
-full_dt
+kable(head(smok))
 
 
 ```
 
-The full dataset is provided above for visualization purposes. It contains a total of 42 observations of 16 variables. 
+The full dataset contains a total of 42 observations of 16 variables. The first six observations are provided for visualization purposes. 
 
 ```{r}
-bw_dt
-
+kable(bw_stat)
 ```
+
 This study focus on the dependent variable of birth weight. To obtain a better understanding of the differences in birth weight between smoking and non-smoking mothers, the chart above groups babies by their mother's smoking status and calculates the respective birth weight summary statistics. From these numbers, babies with non-smoking mothers appear to have high mean and median bith weights.
 
 ```{r}
-demo_dt
+kable(demo_stat)
 ```
 
 While birth weights are our main variable of interest, it is important to see if a mother's smoking status affects other characteristics of the baby. Other demographics of the father are also provided. 
