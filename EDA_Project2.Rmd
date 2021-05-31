@@ -4,3 +4,58 @@ author: "Christina De Cesaris"
 date: "5/30/2021"
 output: html_document
 ---
+
+
+```{r warning=FALSE, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(mvtnorm)
+library(kableExtra)
+library(RVAideMemoire)
+smok = read.csv("data/Birthweight_reduced_kg_R.csv")
+```
+```{r}
+sapply(smok,class)
+
+dropped =  subset(smok, select = -c(smoker))
+
+```
+
+**Multivariate Model Assumptions**
+
+- ASSUMPTIONS
+
+```{r Multivariate Normality, echo=FALSE}
+mqqnorm(dropped,main='Q-Q plot of Mahalanobis D^2 VS. quantiles of Chi^2')
+```
+
+***INSERT ANALYSIS HERE***
+
+```{r Marginal Distributions,echo=FALSE}
+
+
+marginal <-function(df){
+  for (i in 1:length(df)){
+    qqnorm(df[,i],
+         main = paste(names(df[i])," Marginal QQ"))
+    qqline(df[,i])
+  }
+
+}
+
+histogram <-function(df){
+  for (i in 1:length(df))
+    hist(df[,i],
+         xlab = paste(names(df[i])),
+         main = paste(names(df[i])," Histogram"))
+   
+
+}
+
+par(mfrow=c(2,2))
+marginal(dropped)
+histogram(dropped)
+
+```
+
+***INSERT ANALYSIS HERE***
