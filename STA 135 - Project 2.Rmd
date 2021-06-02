@@ -20,6 +20,9 @@ June 2, 2021
 \clearpage
 
 ```{r}
+library(knitr)
+library(dplyr)
+library(kableExtra)
 smok = read.csv("data/Birthweight_reduced_kg_R.csv")
 smok = smok[,2:14]
 ```
@@ -101,35 +104,91 @@ Using the partial F test, the F-statistics is F = 1.236 and the p-value = 0.3106
 
 ### ii. LDA & MANOVA
 
+We want to test if the two gropus are significantly different using MANOVA, meaning we want to see if $\mu_{smoker} = \mu_{not smoker}$ for the two mean vectors. In this case the official test is:
+
+$H_0: \mu_{smoker} = \mu_{not smoker}$
+
+$H_a: \mu_{smoker} \neq \mu_{not smoker}$
+
+The mean vectors for each group are:
+```{r}
+save.means<-aggregate(formula = cbind(Length, Birthweight, Headcirc, Gestation, mage, mnocig, mheight, mppwt, fage, fedyrs, fnocig, fheight) ~ smoker, data = smok, FUN = mean)
+
+kable(save.means[1:7]) %>% kable_styling(latex_options = "hold_position") %>% row_spec(0,bold=TRUE, background = "lightgray")
+kable(save.means[8:13]) %>% kable_styling(latex_options = "hold_position") %>% row_spec(0,bold=TRUE, background = "lightgray")
+```
+For the one way MANOVA we can check to see the probability that the smoker variable affects the model. We can calculate 3 different statistics and measure them against their individual F-distributions to test the model. 
 
 
+```{r}
+save = manova(formula = cbind(Length, Birthweight, Headcirc, Gestation, mage, mnocig, mheight, mppwt, fage, fedyrs, fnocig, fheight) ~ smoker, data = smok)
+Wilks = summary(save, test = "Wilks")$stats[1,2:6]
+Roy = summary(save, test = "Roy")$stats[1,2:6]
+Pillai = summary(save, test = "Pillai")$stats[1,2:6]
+names(Wilks) = c("statistic", names(Wilks)[2:5])
+names(Pillai) = c("statistic", names(Pillai)[2:5])
+names(Roy) = c("statistic", names(Roy)[2:5])
+data.frame(Wilks, Pillai, Roy) %>% kable() %>% kable_styling(latex_options = "hold_position") %>% row_spec(0,bold=TRUE, background = "lightgray")
+```
+As seen above, we can reject the null hypothesis for all three tests, thus there is sufficient evidence to indicate a difference among the means for the smoking status.
 
+Because the null hypothesis is rejected, it is of interest to determine what caused the rejection using one way ANOVA. For this we iterate through all of the variables (besides of course our dependent variable "smoker"), and run single factor ANOVA on each. Below are shown the outputs of each one way ANOVA for each.
+
+```{r}
+df = data.frame()
+for(i in 1:13){
+  if(i != 5) {
+    data = data.frame(smok[,i], smok[,5])
+    names(data) = c(names(smok[1,])[i], "smoker")
+    mod.fit<-aov(formula = data[,1] ~ smoker, data = data) 
+    s = summary(mod.fit)
+    df = rbind(df, data.frame(s[[1]][1,]))
+  }
+}
+row.names(df) = names(smok[1,])[-5]
+df %>% kable() %>% kable_styling(latex_options = "hold_position") %>% row_spec(which(df$Pr..F. < 0.05), bold = T, color = "black", background = "yellow") %>% row_spec(0,bold=TRUE, background = "lightgray")
+```
+
+Based on this, we can see that the mother's and father's respective number of cigarettes are likely the primary mean difference that causes the models for smoker and non-smoker to be different in the MANOVA analysis. We can also see that Birthweight has a low p-value, which fits with earlier analysis suggesting that smoking affects birthweight.
+
+For a new child with the following qualities, we want to determine using LDA if the mother was a smoker or not.
+
+```{r}
+kable(matrix(c(61, 5.1, 36, 43,'?', 43, 7, 165, 64, 38), ncol = 10),  col.names = c("length", "birthweight", "headcirc", "gestation", "smoker", "motherage", "mnocig", "mheight", "mppwt", "fage")) %>% kable_styling(latex_options = "hold_position") %>% row_spec(0,bold=TRUE, background = "lightgray")
+kable(matrix(c( 19, 45, 189), ncol = 3), col.names = c("fedyrs", "fnocig", "fheight")) %>% kable_styling(latex_options = "hold_position") %>% row_spec(0,bold=TRUE, background = "lightgray")
+
+new_baby = c(61, 5.1, 36, 43, 0, 43, 7, 165, 64, 38, 19, 45, 189)
+names(new_baby) = c("length", "birthweight", "headcirc", "gestation", "smoker", "motherage", "mnocig", "mheight", "mppwt", "fage", "fedyrs", "fnocig", "fheight")
+```
+
+To do this we will calculate with Mahalanobis distance to classify a new observation. We calculate the distance from the centroid of the non-smoker and smoker groups as $D0$ and $D1$ respectively. Whichever value is less is the group that the observation falls closer to. When we do this we see the following:
+
+```{r}
+obs = as.matrix(new_baby[-5])
+pop0<-smok[smok$smoker == 0,-5]
+pop1<-smok[smok$smoker == 1,-5]
+N0<-nrow(pop0)
+N1<-nrow(pop1)
+#head(pop1)
+sigma.hat0<-cov(pop0)
+sigma.hat1<-cov(pop1)
+sigma.hat.p<-((N0 - 1)*sigma.hat0 + (N1 - 1)*sigma.hat1)/(N0 + N1 - 2)
+mu.hat0<-as.matrix(colMeans(pop0)) #Force it to be an actual column vector
+mu.hat1<-as.matrix(colMeans(pop1))
+b<-solve(sigma.hat.p) %*% (mu.hat0 - mu.hat1)
+k<-0.5*t(mu.hat0 - mu.hat1) %*% solve(sigma.hat.p) %*% (mu.hat0 + mu.hat1)
+
+D0<-t(obs - mu.hat0) %*% solve(sigma.hat.p) %*% (obs - mu.hat0)
+D1<-t(obs - mu.hat1) %*% solve(sigma.hat.p) %*% (obs - mu.hat1)
+data.frame(D0, D1) %>% kable() %>% kable_styling(latex_options = "hold_position") %>% column_spec(1, bold = T, color = "black", background = "yellow") %>% row_spec(0,bold=TRUE, background = "lightgray")
+```
+
+Based on the LDA, we would conclude that the mother is NOT a smoker based on $D0 < D1$, implying that the baby would belong in group 0. This is interesting because mnocig $= 7$ which logically would imply the mother is a smoker, however the baby's birthweight is larger than any other birthweights we have seen in our data. Since we saw in single factor ANOVA that smoking has a strong effect on birthweight, the birthweight being so high is likely what placed the baby in the non-smoker group against intuition. This is an interesting example where we see the shortcomings of LDA in prediction power when faced with an outlier.
 
 # IV. Conclusion 
 Linear Regression - two most significant variables in predicting birth weight were head circumference and gestation period and this is proven by our partial F test (rest are insignificant); reduced model is good bc we checked the 4 assumptions
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+MANOVA and LDA - 
 
 
 
