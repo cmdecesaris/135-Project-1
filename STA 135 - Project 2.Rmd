@@ -37,25 +37,20 @@ Although low birth weighted infants can be healthy, under improper care or other
 # II. Data Exploration
 
 ```{r}
-sapply(smok,class)
-
 dropped = subset(smok, select = -c(smoker))
-
 ```
 
 **Multivariate Model Assumptions**
 
 - ASSUMPTIONS
 
-```{r Multivariate Normality, echo=FALSE}
+```{r, echo=FALSE, message = FALSE}
 mqqnorm(dropped,main='Q-Q plot of Mahalanobis D^2 VS. quantiles of Chi^2')
 ```
 
 ***INSERT ANALYSIS HERE***
 
-```{r Marginal Distributions,echo=FALSE}
-
-
+```{r,echo=FALSE}
 marginal <-function(df){
   for (i in 1:length(df)){
     qqnorm(df[,i],
