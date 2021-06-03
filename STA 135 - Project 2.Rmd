@@ -233,11 +233,7 @@ Based on the LDA, we would conclude that the mother is NOT a smoker based on $D0
 # IV. Conclusion 
 Based on the Linear Regression model, the two most significant variables in predicting birth weight were head circumference and gestation period and this is proven by our partial F test. The reduced model is valid because we checked the 4 assumptions. 
 
-Based on MANOVA and LDA, we see that smoking has a statistically signficant relationship with the birthweight, which thus implies that it is likely to have a relationship with the other physical features based on the Linear Regression test.
-
-MANOVA and LDA - 
-
-
+Based on MANOVA and LDA, we see that smoking has a statistically significant relationship with the birthweight, which combined with the Linear Regression Analysis implies that it is likely to have a relationship with the other physical features as well. We also see that the LDA is not very susceptible to outliers, most likely due to the small size of the dataset.
 
 \clearpage
 
