@@ -37,25 +37,21 @@ Although low birth weighted infants can be healthy, under improper care or other
 # II. Data Exploration
 
 ```{r}
-sapply(smok,class)
-
 dropped = subset(smok, select = -c(smoker))
-
 ```
 
 
 
-```{r Multivariate Normality, echo=FALSE}
-mqqnorm(dropped,main='Q-Q plot of Mahalanobis D^2 VS. quantiles of Chi^2')
+```{r, echo=FALSE, message = FALSE}
+x = mqqnorm(dropped,main='Q-Q plot of Mahalanobis D^2 VS. quantiles of Chi^2')
+data.frame(outliers = x) %>% t() %>% kable() %>% kable_styling(latex_options = "hold_position")
 ```
 
 Based on the Mahalanobis distances, points 42 and 21 are identified as outliers, but their distances are inconsequential. Since they are not major gross outliers, we did not remove any outliers from the data.
 
 The QQ plot indicates the data roughly follows a multivariate distribution. It is not perfect, but sufficient.
 
-```{r Marginal Distributions,echo=FALSE}
-
-
+```{r,echo=FALSE}
 marginal <-function(df){
   for (i in 1:length(df)){
     qqnorm(df[,i],
@@ -233,11 +229,7 @@ Based on the LDA, we would conclude that the mother is NOT a smoker based on $D0
 # IV. Conclusion 
 Based on the Linear Regression model, the two most significant variables in predicting birth weight were head circumference and gestation period and this is proven by our partial F test. The reduced model is valid because we checked the 4 assumptions. 
 
-Based on MANOVA and LDA, we see that smoking has a statistically signficant relationship with the birthweight, which thus implies that it is likely to have a relationship with the other physical features based on the Linear Regression test.
-
-MANOVA and LDA - 
-
-
+Based on MANOVA and LDA, we see that smoking has a statistically significant relationship with the birthweight, which combined with the Linear Regression Analysis implies that it is likely to have a relationship with the other physical features as well. We also see that the LDA is not very susceptible to outliers, most likely due to the small size of the dataset.
 
 \clearpage
 
