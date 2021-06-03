@@ -21,21 +21,66 @@ June 2, 2021
 
 ```{r}
 library(knitr)
+library(ggplot2)
 library(dplyr)
+library(mvtnorm)
 library(kableExtra)
+library(RVAideMemoire)
 smok = read.csv("data/Birthweight_reduced_kg_R.csv")
 smok = smok[,2:14]
 ```
 
 
 # I. Introduction
-
-
-
+Although low birth weighted infants can be healthy, under improper care or other circumstances, it can cause serious long-term health problems. A low birth weight is defined as being below 2.5kg. It can be caused by a multitude of factors \textemdash poor socioeconomic situation, premature birth, a mother's pre-existing health conditions, and more. In this project, we will highlight how smoking and other factors can cause low birth weights in infants in comparison to non-smoking parents. 
 
 # II. Data Exploration
 
+```{r}
+sapply(smok,class)
 
+dropped = subset(smok, select = -c(smoker))
+
+```
+
+**Multivariate Model Assumptions**
+
+- ASSUMPTIONS
+
+```{r Multivariate Normality, echo=FALSE}
+mqqnorm(dropped,main='Q-Q plot of Mahalanobis D^2 VS. quantiles of Chi^2')
+```
+
+***INSERT ANALYSIS HERE***
+
+```{r Marginal Distributions,echo=FALSE}
+
+
+marginal <-function(df){
+  for (i in 1:length(df)){
+    qqnorm(df[,i],
+         main = paste(names(df[i])," Marginal QQ"))
+    qqline(df[,i])
+  }
+
+}
+
+histogram <-function(df){
+  for (i in 1:length(df))
+    hist(df[,i],
+         xlab = paste(names(df[i])),
+         main = paste(names(df[i])," Histogram"))
+   
+
+}
+
+par(mfrow=c(2,2))
+marginal(dropped)
+histogram(dropped)
+
+```
+
+***INSERT ANALYSIS HERE***
 
 # III. Analysis
 ### i. Linear Model Fitting
@@ -186,7 +231,9 @@ data.frame(D0, D1) %>% kable() %>% kable_styling(latex_options = "hold_position"
 Based on the LDA, we would conclude that the mother is NOT a smoker based on $D0 < D1$, implying that the baby would belong in group 0. This is interesting because mnocig $= 7$ which logically would imply the mother is a smoker, however the baby's birthweight is larger than any other birthweights we have seen in our data. Since we saw in single factor ANOVA that smoking has a strong effect on birthweight, the birthweight being so high is likely what placed the baby in the non-smoker group against intuition. This is an interesting example where we see the shortcomings of LDA in prediction power when faced with an outlier.
 
 # IV. Conclusion 
-Linear Regression - two most significant variables in predicting birth weight were head circumference and gestation period and this is proven by our partial F test (rest are insignificant); reduced model is good bc we checked the 4 assumptions
+Based on the Linear Regression model, the two most significant variables in predicting birth weight were head circumference and gestation period and this is proven by our partial F test. The reduced model is valid because we checked the 4 assumptions. 
+
+Based on MANOVA and LDA, we see that smoking has a statistically signficant relationship with the birthweight, which thus implies that it is likely to have a relationship with the other physical features based on the Linear Regression test.
 
 MANOVA and LDA - 
 

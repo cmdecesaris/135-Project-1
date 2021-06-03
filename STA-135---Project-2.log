@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  2 JUN 2021 11:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  2 JUN 2021 18:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1066,118 +1066,259 @@ LaTeX Info: Redefining \nameref on input line 122.
 [1
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 160.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 151.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 165.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+
+LaTeX Warning: File `STA-135---Project-2_files/figure-latex/Multivariate Normal
+ity-1.pdf' not found on input line 168.
+
+
+<STA-135---Project-2_files/figure-latex/Multivariate Normality-1.pdf, id=11, 43
+9.6425pt x 284.06125pt>
+File: STA-135---Project-2_files/figure-latex/Multivariate Normality-1.pdf Graph
+ic file (type pdf)
+<use STA-135---Project-2_files/figure-latex/Multivariate Normality-1.pdf>
+Package pdftex.def Info: STA-135---Project-2_files/figure-latex/Multivariate No
+rmality-1.pdf used on input line 168.
+(pdftex.def)             Requested size: 439.65483pt x 284.0692pt.
+
+Overfull \hbox (40.47675pt too wide) in paragraph at lines 168--169
+[]\T1/lmr/m/n/10 (-20) Normality-1.pdf [] 
+ []
+
+
+LaTeX Warning: File `STA-135---Project-2_files/figure-latex/Marginal Distributi
+ons-1.pdf' not found on input line 176.
+
+
+<STA-135---Project-2_files/figure-latex/Marginal Distributions-1.pdf, id=12, 44
+2.65375pt x 294.09875pt>
+File: STA-135---Project-2_files/figure-latex/Marginal Distributions-1.pdf Graph
+ic file (type pdf)
+<use STA-135---Project-2_files/figure-latex/Marginal Distributions-1.pdf>
+Package pdftex.def Info: STA-135---Project-2_files/figure-latex/Marginal Distri
+butions-1.pdf used on input line 176.
+(pdftex.def)             Requested size: 442.65265pt x 294.09802pt.
+
+LaTeX Warning: File `STA-135---Project-2_files/figure-latex/Marginal Distributi
+ons-2.pdf' not found on input line 177.
+
+
+<STA-135---Project-2_files/figure-latex/Marginal Distributions-2.pdf, id=13, 44
+2.65375pt x 294.09875pt>
+File: STA-135---Project-2_files/figure-latex/Marginal Distributions-2.pdf Graph
+ic file (type pdf)
+<use STA-135---Project-2_files/figure-latex/Marginal Distributions-2.pdf>
+Package pdftex.def Info: STA-135---Project-2_files/figure-latex/Marginal Distri
+butions-2.pdf used on input line 177.
+(pdftex.def)             Requested size: 442.65265pt x 294.09802pt.
+
+LaTeX Warning: File `STA-135---Project-2_files/figure-latex/Marginal Distributi
+ons-3.pdf' not found on input line 178.
+
+
+<STA-135---Project-2_files/figure-latex/Marginal Distributions-3.pdf, id=14, 44
+2.65375pt x 294.09875pt>
+File: STA-135---Project-2_files/figure-latex/Marginal Distributions-3.pdf Graph
+ic file (type pdf)
+<use STA-135---Project-2_files/figure-latex/Marginal Distributions-3.pdf>
+Package pdftex.def Info: STA-135---Project-2_files/figure-latex/Marginal Distri
+butions-3.pdf used on input line 178.
+(pdftex.def)             Requested size: 442.65265pt x 294.09802pt.
+
+LaTeX Warning: File `STA-135---Project-2_files/figure-latex/Marginal Distributi
+ons-4.pdf' not found on input line 179.
+
+
+<STA-135---Project-2_files/figure-latex/Marginal Distributions-4.pdf, id=15, 44
+1.65pt x 290.08376pt>
+File: STA-135---Project-2_files/figure-latex/Marginal Distributions-4.pdf Graph
+ic file (type pdf)
+<use STA-135---Project-2_files/figure-latex/Marginal Distributions-4.pdf>
+Package pdftex.def Info: STA-135---Project-2_files/figure-latex/Marginal Distri
+butions-4.pdf used on input line 179.
+(pdftex.def)             Requested size: 441.66911pt x 290.09631pt.
+
+LaTeX Warning: File `STA-135---Project-2_files/figure-latex/Marginal Distributi
+ons-5.pdf' not found on input line 180.
+
+
+<STA-135---Project-2_files/figure-latex/Marginal Distributions-5.pdf, id=16, 44
+1.65pt x 292.09125pt>
+File: STA-135---Project-2_files/figure-latex/Marginal Distributions-5.pdf Graph
+ic file (type pdf)
+<use STA-135---Project-2_files/figure-latex/Marginal Distributions-5.pdf>
+Package pdftex.def Info: STA-135---Project-2_files/figure-latex/Marginal Distri
+butions-5.pdf used on input line 180.
+(pdftex.def)             Requested size: 441.66911pt x 292.10388pt.
+
+LaTeX Warning: File `STA-135---Project-2_files/figure-latex/Marginal Distributi
+ons-6.pdf' not found on input line 181.
+
+
+<STA-135---Project-2_files/figure-latex/Marginal Distributions-6.pdf, id=17, 44
+1.65pt x 292.09125pt>
+File: STA-135---Project-2_files/figure-latex/Marginal Distributions-6.pdf Graph
+ic file (type pdf)
+<use STA-135---Project-2_files/figure-latex/Marginal Distributions-6.pdf>
+Package pdftex.def Info: STA-135---Project-2_files/figure-latex/Marginal Distri
+butions-6.pdf used on input line 181.
+(pdftex.def)             Requested size: 441.66911pt x 292.10388pt.
+
+Overfull \hbox (56.24759pt too wide) in paragraph at lines 176--182
+[]\T1/lmr/m/n/10 (-20) Distributions-1.pdf []
+ []
+
+
+Overfull \hbox (56.24759pt too wide) in paragraph at lines 176--182
+\T1/lmr/m/n/10 (-20) Distributions-2.pdf []
+ []
+
+
+Overfull \hbox (56.24759pt too wide) in paragraph at lines 176--182
+\T1/lmr/m/n/10 (-20) Distributions-3.pdf []
+ []
+
+
+Overfull \hbox (55.26405pt too wide) in paragraph at lines 176--182
+\T1/lmr/m/n/10 (-20) Distributions-4.pdf []
+ []
+
+
+Overfull \hbox (55.26405pt too wide) in paragraph at lines 176--182
+\T1/lmr/m/n/10 (-20) Distributions-5.pdf []
+ []
+
+
+Overfull \hbox (55.26405pt too wide) in paragraph at lines 176--182
+\T1/lmr/m/n/10 (-20) Distributions-6.pdf [] 
+ []
+
+[2
+
+ <./STA-135---Project-2_files/figure-latex/Multivariate Normality-1.pdf>] [3 <.
+/STA-135---Project-2_files/figure-latex/Marginal Distributions-1.pdf> <./STA-13
+5---Project-2_files/figure-latex/Marginal Distributions-2.pdf>] [4 <./STA-135--
+-Project-2_files/figure-latex/Marginal Distributions-3.pdf> <./STA-135---Projec
+t-2_files/figure-latex/Marginal Distributions-4.pdf>] [5 <./STA-135---Project-2
+_files/figure-latex/Marginal Distributions-5.pdf> <./STA-135---Project-2_files/
+figure-latex/Marginal Distributions-6.pdf>]
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 202.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 160.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 202.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 160
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 202
 .
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 160
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 202
 .
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 160.
+(Font)              <10> on input line 202.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 160.
+(Font)              <7> on input line 202.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 160.
-LaTeX Font Info:    Try loading font information for U+msa on input line 160.
+(Font)              <5> on input line 202.
+LaTeX Font Info:    Try loading font information for U+msa on input line 202.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2017/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 160.
+LaTeX Font Info:    Try loading font information for U+msb on input line 202.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2017/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-<STA-135---Project-2_files/figure-latex/unnamed-chunk-3-1.pdf, id=11, 456.70625
-pt x 314.17375pt>
-File: STA-135---Project-2_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file
+<STA-135---Project-2_files/figure-latex/unnamed-chunk-4-1.pdf, id=100, 456.7062
+5pt x 314.17375pt>
+File: STA-135---Project-2_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file
  (type pdf)
-<use STA-135---Project-2_files/figure-latex/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: STA-135---Project-2_files/figure-latex/unnamed-chunk-3
--1.pdf used on input line 171.
+<use STA-135---Project-2_files/figure-latex/unnamed-chunk-4-1.pdf>
+Package pdftex.def Info: STA-135---Project-2_files/figure-latex/unnamed-chunk-4
+-1.pdf used on input line 213.
 (pdftex.def)             Requested size: 456.71906pt x 314.18256pt.
-[2
-
- <./STA-135---Project-2_files/figure-latex/unnamed-chunk-3-1.pdf>]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[3]
-Overfull \hbox (50.52486pt too wide) in paragraph at lines 342--349
+[6 <./STA-135---Project-2_files/figure-latex/unnamed-chunk-4-1.pdf>] [7]
+Overfull \hbox (50.52486pt too wide) in paragraph at lines 384--391
  [][] 
  []
 
-[4] [5]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 405.
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 446.
-LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 457
+[8]
+LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 461
 .
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Underfull \vbox (badness 3138) detected at line 480
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 464.
+
+Underfull \vbox (badness 3138) detected at line 554
  []
 
-[6
+[9
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 483.
-[7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 483.
+Underfull \vbox (badness 10000) detected at line 554
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 554
+ []
+
+[10]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 557.
+[11]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 557.
 (./STA-135---Project-2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 483.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 483.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 483.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 557.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 557.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 557.
  ) 
 Here is how much of TeX's memory you used:
- 14862 strings out of 492995
- 214231 string characters out of 6132704
- 348197 words of memory out of 5000000
- 18093 multiletter control sequences out of 15000+600000
- 43942 words of font info for 67 fonts, out of 8000000 for 9000
+ 14934 strings out of 492995
+ 217251 string characters out of 6132704
+ 349850 words of memory out of 5000000
+ 18152 multiletter control sequences out of 15000+600000
+ 48661 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,9n,38p,1343b,412s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local
-/texlive/2017/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2017/
+ 34i,9n,38p,1283b,412s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
+texlive/2017/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local/texlive/2017/
 texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2017/texmf-dist/fon
 ts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvi
 ps/lm/lm-mathit.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/l
 mbx10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmbx12.pfb>
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/texlive/2
-017/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2017/texmf-d
-ist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
-pe1/public/lm/lmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public
-/lm/lmtk10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmtt10
-.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on STA-135---Project-2.pdf (7 pages, 231815 bytes).
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/loc
+al/texlive/2017/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive
+/2017/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/texlive/2017/texmf
+-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts
+/type1/public/lm/lmr7.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/publi
+c/lm/lmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmtk1
+0.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></us
+r/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
+Output written on STA-135---Project-2.pdf (11 pages, 310068 bytes).
 PDF statistics:
- 138 PDF objects out of 1000 (max. 8388607)
- 114 compressed objects within 2 object streams
- 25 named destinations out of 1000 (max. 500000)
- 6198 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 224 PDF objects out of 1000 (max. 8388607)
+ 174 compressed objects within 2 object streams
+ 29 named destinations out of 1000 (max. 500000)
+ 6233 words of extra memory for PDF output out of 10000 (max. 10000000)
 
