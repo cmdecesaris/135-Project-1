@@ -49,7 +49,7 @@ data.frame(outliers = x) %>% t() %>% kable() %>% kable_styling(latex_options = "
 
 Based on the Mahalanobis distances, points 42 and 21 are identified as outliers, but their distances are inconsequential. Since they are not major gross outliers, we did not remove any outliers from the data.
 
-The QQ plot indicates the data roughly follows a multivariate distribution. It is not perfect, but sufficient.
+The QQ plot indicates the data roughly follows a multivariate distribution. It is not perfect, but sufficient. This is important because the models fit in the later sections of this report rely upon the assumption that the data follows a multivariate normal distribution. 
 
 ```{r,echo=FALSE}
 marginal <-function(df){
@@ -70,13 +70,13 @@ histogram <-function(df){
 
 }
 
-par(mfrow=c(2,2))
+par(mfrow=c(3,2))
 marginal(dropped)
 histogram(dropped)
 
 ```
-
-Based on the marginal distribution of our variables, birthweight appears most normally distributed. Many of the variables are skewed right and do not follow a normal distribution. 
+ 
+Based on the marginal distribution of our variables, birth weight appears most normally distributed. Many of the variables are skewed right and do not follow a normal distribution, however, it is important to note that birth weight does follow a normal distribution because it is used as the response in the next section.   
 
 # III. Analysis
 ### i. Linear Model Fitting
