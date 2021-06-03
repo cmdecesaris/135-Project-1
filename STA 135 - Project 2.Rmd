@@ -43,15 +43,15 @@ dropped = subset(smok, select = -c(smoker))
 
 ```
 
-**Multivariate Model Assumptions**
 
-- ASSUMPTIONS
 
 ```{r Multivariate Normality, echo=FALSE}
 mqqnorm(dropped,main='Q-Q plot of Mahalanobis D^2 VS. quantiles of Chi^2')
 ```
 
-***INSERT ANALYSIS HERE***
+Based on the Mahalanobis distances, points 42 and 21 are identified as outliers, but their distances are inconsequential. Since they are not major gross outliers, we did not remove any outliers from the data.
+
+The QQ plot indicates the data roughly follows a multivariate distribution. It is not perfect, but sufficient.
 
 ```{r Marginal Distributions,echo=FALSE}
 
@@ -80,7 +80,7 @@ histogram(dropped)
 
 ```
 
-***INSERT ANALYSIS HERE***
+Based on the marginal distribution of our variables, birthweight appears most normally distributed. Many of the variables are skewed right and do not follow a normal distribution. 
 
 # III. Analysis
 ### i. Linear Model Fitting
