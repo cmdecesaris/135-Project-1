@@ -45,7 +45,8 @@ dropped = subset(smok, select = -c(smoker))
 - ASSUMPTIONS
 
 ```{r, echo=FALSE, message = FALSE}
-mqqnorm(dropped,main='Q-Q plot of Mahalanobis D^2 VS. quantiles of Chi^2')
+x = mqqnorm(dropped,main='Q-Q plot of Mahalanobis D^2 VS. quantiles of Chi^2')
+data.frame(outliers = x) %>% t() %>% kable() %>% kable_styling(latex_options = "hold_position")
 ```
 
 ***INSERT ANALYSIS HERE***
