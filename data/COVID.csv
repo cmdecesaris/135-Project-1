@@ -1,4 +1,4 @@
-Time,Parameter,Total Cases,Total Deaths,Active Cases,Critical,Mortality Recovery Ratio
+Time,Parameter,TotalCases,TotalDeaths,ActiveCases,Critical,MortalityRecoveryRatio
 30-Mar,Min,515,1,99,1,0.01
 30-Mar,1st Qu,954.8,9.75,866.8,11,0.0775
 30-Mar,Median,1937,26.5,1867.5,38,0.335
