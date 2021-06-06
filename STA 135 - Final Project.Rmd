@@ -1,0 +1,92 @@
+---
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = F, message = F)
+```
+
+\begin{center}
+\vspace*{10\baselineskip}
+\LARGE{\textbf{COVID-19 [insert method here]}}}\\
+\vspace*{19\baselineskip}
+\normalsize{Trevor Carpenter, Christina De Cesaris, Michelle Tran}\\
+STA 135: Multivariate Data Analysis\\
+Professor Maxime Pouokam\\
+University of California, Davis\\
+June 7, 2021
+\end{center}
+
+\clearpage
+
+```{r}
+library(readr)
+covid = as.data.frame(read_delim("data/COVID.csv", delim = ','))
+```
+
+# I. Introduction
+The COVID-19 pandemic is an event that will have long-lasting effects in our society. While no country was entirely prepared for the chaos that ensued, there were definitely some countries that had a better handle on the situation than others. Countries who were quick on putting out preventative measures and were able to produce masks quickly were able to keep their population's total cases to a minimum, whereas countries who lagged behind on safety measures quickly saw the exponent rise in cases and the overcapacity of hospitals. 
+
+As we are nearing the end of pandemic, much data has been collected and analyzed. In our paper we have decided to look at data involving the mortality recovery ratio in regards to the beginning of the pandemic. [insert question of interest and analysis technique]
+
+# II. Data, Models, and Methods
+The COVID-19 data used here is publicly and available from Worldometer website https://www.worldometers.info/coronavirus/ for March 30, April 15, and April 25, 2020. Data were captured on the next day to these specified dates. Countries with COVID-19 total cases less than 500 or countries with missing data were omitted from the analysis to keep good representability of each variable. Number of countries included in the analysis was 56 countries on March 30, 82 countries on April 15, and 91 countries on April 25.
+
+The variables included; in any given country, total cases refers to total cases confirmed with COVID-19; active cases refers
+to total number of open cases (mild, serious, or critical); total deaths refers to total deaths with COVID-19; critically ill
+cases refers to number of serious/critically ill cases; mortality recovery ratio refers to the ratio between total deaths to total
+recovered patients.
+
+
+
+# III. Results
+
+
+
+# IV. Conclusion & Future Work
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+
+\subsection*{Appendix: R Script}
+
+```{r, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+
+```
