@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = F, warning = F, message = F)
 
 \begin{center}
 \vspace*{10\baselineskip}
-\LARGE{\textbf{COVID-19 [insert method here]}}}\\
+\LARGE{\textbf{COVID-19 Data Analysis}}\\
 \vspace*{19\baselineskip}
 \normalsize{Trevor Carpenter, Christina De Cesaris, Michelle Tran}\\
 STA 135: Multivariate Data Analysis\\
@@ -20,6 +20,7 @@ June 7, 2021
 \clearpage
 
 ```{r}
+library(knitr)
 library(readr)
 covid = as.data.frame(read_delim("data/COVID.csv", delim = ','))
 ```
@@ -57,14 +58,6 @@ anova(fmodel,rmodel)
 
 
 # IV. Conclusion & Future Work
-
-
-
-
-
-
-
-
 
 
 
