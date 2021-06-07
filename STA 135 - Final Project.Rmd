@@ -84,37 +84,7 @@ anova(fmodel,rmodel) %>% kable()
 
 Interestingly the P-value for the ANOVA model is quite high and the F-value is very low, so we cannot conclude that there is any statistically significant difference between the reduced and full models in predicting the $Y$ value.
 
-
-
 # IV. Conclusion & Future Work
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
