@@ -21,6 +21,7 @@ June 7, 2021
 
 ```{r}
 library(knitr)
+library(dplyr)
 library(readr)
 covid = as.data.frame(read_delim("data/COVID.csv", delim = ','))
 ```
@@ -41,23 +42,52 @@ recovered patients.
 
 
 # III. Results
-```{r, results='hide'}
+```{r}
 covidpt = covid[-c(4, 10, 16), 3:7]
 
 fmodel = lm(MortalityRecoveryRatio ~., data = covidpt)
-summary(fmodel)
-
+summary(fmodel)$coefficients %>% kable()
+```
+```{r}
 step(fmodel)
+```
 
+Based on both the step model and the linear regression model, we see that it is likely that the Total Cases variable is not a good predictor of the Mortality Recovery Ratio. However this could be misleading due to correlation between variables, so we can check with a full and reduced ANOVA model.
+
+```{r}
 rmodel = lm(MortalityRecoveryRatio ~ TotalDeaths + ActiveCases 
             + Critical, data = covidpt)
-
-anova(fmodel,rmodel)
 ```
+
+```{r}
+summary(rmodel)$coefficients %>% kable()
+```
+
+We build the model based on the following variables:
+
+$Y = MortalityRecoveryRatio$ \
+$X_1 = TotalCases$ \
+$X_2 = TotalDeaths$ \
+$X_3 = ActiveCases$\
+$X_4 = Critical$\
+
+Our reduced model is 
+$Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \beta_3X_3 + \beta_4X_4$ 
+and our full model is 
+$Y = \beta_0 + \beta_2X_2 + \beta_3X_3 + \beta_4X_4$
+
+Running the anova model we get the following.
+
+```{r}
+anova(fmodel,rmodel) %>% kable()
+```
+
+Interestingly the P-value for the ANOVA model is quite high and the F-value is very low, so we cannot conclude that there is any statistically significant difference between the reduced and full models in predicting the $Y$ value.
 
 
 
 # IV. Conclusion & Future Work
+
 
 
 
