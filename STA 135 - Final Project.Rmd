@@ -29,7 +29,7 @@ covid = as.data.frame(read_delim("data/COVID.csv", delim = ','))
 # I. Introduction
 The COVID-19 pandemic is an event that will have long-lasting effects in our society. While no country was entirely prepared for the chaos that ensued, there were definitely some countries that had a better handle on the situation than others. Countries who were quick on putting out preventative measures and were able to produce masks quickly were able to keep their population's total cases to a minimum, whereas countries who lagged behind on safety measures quickly saw the exponent rise in cases and the overcapacity of hospitals. 
 
-As we are nearing the end of pandemic, much data has been collected and analyzed. In our paper we have decided to look at data involving the mortality recovery ratio in regards to the beginning of the pandemic. [insert question of interest and analysis technique]
+As we are nearing the end of pandemic, much data has been collected and analyzed. In our paper we have decided to look at data involving the mortality recovery ratio in regards to the beginning of the pandemic. Mortality recovery ratio refers the ratio of total deaths to total recovered patients. Our question of interest is: what relationship did the variables have with the mortality recovery ratio for the COVID-19 dataset? To answer our question, we decided to use linear regression and use the anova function to conduct a hypothesis testing to see if the selected variables are significant. 
 
 # II. Data, Models, and Methods
 The COVID-19 data used here is publicly and available from Worldometer website https://www.worldometers.info/coronavirus/ for March 30, April 15, and April 25, 2020. Data were captured on the next day to these specified dates. Countries with COVID-19 total cases less than 500 or countries with missing data were omitted from the analysis to keep good representability of each variable. Number of countries included in the analysis was 56 countries on March 30, 82 countries on April 15, and 91 countries on April 25.
@@ -39,10 +39,9 @@ to total number of open cases (mild, serious, or critical); total deaths refers 
 cases refers to number of serious/critically ill cases; mortality recovery ratio refers to the ratio between total deaths to total
 recovered patients.
 
+[justification]
 
-
-# III. Results
-<<<<<<< HEAD
+# III. Results of our Linear Model Testing
 ```{r, results='hide'}
 covidpt = covid[-c(4, 10, 16), 3:7]
 
@@ -57,54 +56,51 @@ summary(rmodel)
 
 anova(fmodel,rmodel)
 ```
-=======
-```{r}
-covidpt = covid[-c(4, 10, 16), 3:7]
->>>>>>> bc759d27965a5b4f7d752ef5e9ca00b6cd8394d0
 
-fmodel = lm(MortalityRecoveryRatio ~., data = covidpt)
+Below shows a table of the full model and its beta values. 
+
+```{r}
 summary(fmodel)$coefficients %>% kable()
 ```
-```{r}
-step(fmodel)
-```
 
-Based on both the step model and the linear regression model, we see that it is likely that the Total Cases variable is not a good predictor of the Mortality Recovery Ratio. However this could be misleading due to correlation between variables, so we can check with a full and reduced ANOVA model.
-
-```{r}
-rmodel = lm(MortalityRecoveryRatio ~ TotalDeaths + ActiveCases 
-            + Critical, data = covidpt)
-```
+After conducting the step method and looking at the full linear regression model, we see that it is likely that the Total Cases variable is not a good predictor of the Mortality Recovery Ratio. However this could be misleading due to correlation between variables, so we can check with a full and reduced ANOVA model.
 
 ```{r}
 summary(rmodel)$coefficients %>% kable()
 ```
 
 We build the model based on the following variables:
+\begin{center}
+$Y = MortalityRecoveryRatio$ \\
+$X_1 = TotalCases$ \\
+$X_2 = TotalDeaths$ \\
+$X_3 = ActiveCases$\\
+$X_4 = Critical$\\
+\end{center}
 
-$Y = MortalityRecoveryRatio$ \
-$X_1 = TotalCases$ \
-$X_2 = TotalDeaths$ \
-$X_3 = ActiveCases$\
-$X_4 = Critical$\
-
-Our reduced model is 
+Our full model is 
 $Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \beta_3X_3 + \beta_4X_4$ 
-and our full model is 
+and our reduced model is 
 $Y = \beta_0 + \beta_2X_2 + \beta_3X_3 + \beta_4X_4$
 
 Running the anova model we get the following.
+
+\begin{center}
+$H_0$: $\beta_2$ = $\beta_3$ = $\beta_4$ \\
+$H_A$: $\beta_i$ $\ne$ 0 for at least one i
+\end{center}
 
 ```{r}
 anova(fmodel,rmodel) %>% kable()
 ```
 
-Interestingly the P-value for the ANOVA model is quite high and the F-value is very low, so we cannot conclude that there is any statistically significant difference between the reduced and full models in predicting the $Y$ value.
-
+Interestingly the P-value for the ANOVA model is quite high and the F-value is very low, so we cannot conclude that there is any statistically significant difference between the reduced and full models in predicting the $Y$ value.  We can conclude that the total cases does not statistically contribute significantly to the mortality recovery ratio. The most statistically significant variables in determining the ratio are total deaths, active cases, and critical cases.
 
 
 # IV. Conclusion & Future Work
+Overall, the dataset shows that the most significant variables in predicting the mortality recovery ratio are total deaths, active case, and critical cases. We learned this from looking at the original full model's p-values as well as doing the anova test in order to check for the variables significance. 
 
+Despite nearing the end of the pandemic, there is still a lot of information to be garnered about how spread occurs quickly and countermeasures to slow down the spread of a virus. Those who lived in a poor environment and jobs that required close contact, were definitely areas that worsened the spread of the virus. Future possible research can see how socioeconomic factors and occupation played a huge role in the mortality rate ratio. How much of a significance difference would the ratios between those who have higher incomes compared to lower incomes differ? Overall, studies about the pandemic will allow for more rules and infrastructure to take place, thereby enriching our society as a whole.
 
 
 
