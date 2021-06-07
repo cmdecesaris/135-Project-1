@@ -40,6 +40,19 @@ recovered patients.
 
 
 # III. Results
+```{r, results='hide'}
+covidpt = covid[-c(4, 10, 16), 3:7]
+
+fmodel = lm(MortalityRecoveryRatio ~., data = covidpt)
+summary(fmodel)
+
+step(fmodel)
+
+rmodel = lm(MortalityRecoveryRatio ~ TotalDeaths + ActiveCases 
+            + Critical, data = covidpt)
+
+anova(fmodel,rmodel)
+```
 
 
 
