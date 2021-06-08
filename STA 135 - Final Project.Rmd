@@ -39,7 +39,7 @@ to total number of open cases (mild, serious, or critical); total deaths refers 
 cases refers to number of serious/critically ill cases; mortality recovery ratio refers to the ratio between total deaths to total
 recovered patients.
 
-[justification]
+For this project we compare the results of Linear Models and ANOVA Analysis to see which variables are best to describe Mortality Recovery Ratio in the data. We believe these models will be the best to describe this because the linear model will give us the best idea overall, but ANOVA analysis will tell us if switching to that model from the full model is signficantly more descriptive of the data.
 
 # III. Results of our Linear Model Testing
 ```{r, results='hide'}
